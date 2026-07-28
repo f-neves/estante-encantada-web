@@ -1,0 +1,128 @@
+.container {
+  min-height: 100dvh;
+  display: flex;
+  justify-content: center;
+  background: var(--c-bg);
+  background-image: var(--app-bg-image);
+  background-size: cover;
+}
+
+.inner {
+  width: 100%;
+  max-width: 560px;
+  display: flex;
+  flex-direction: column;
+  padding: env(safe-area-inset-top) 0 max(var(--sp-xl), env(safe-area-inset-bottom));
+}
+
+.skipRow {
+  display: flex;
+  justify-content: flex-end;
+  min-height: 56px;
+  padding: var(--sp-md) var(--sp-lg);
+}
+
+.skip {
+  color: var(--c-text-soft);
+  font-weight: 700;
+  font-size: var(--fs-body);
+  padding: var(--sp-sm) var(--sp-md);
+  border-radius: var(--r-pill);
+}
+
+/* Carrossel: rolagem horizontal com encaixe por slide. Funciona com arraste no
+   toque, roda do mouse e teclado, e os pontos abaixo também navegam. */
+.track {
+  flex: 1;
+  display: flex;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+
+.track::-webkit-scrollbar {
+  display: none;
+}
+
+.slide {
+  flex: 0 0 100%;
+  scroll-snap-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: var(--sp-xl);
+  gap: var(--sp-md);
+}
+
+.bubble {
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-soft);
+  margin-bottom: var(--sp-lg);
+  animation: bob 3200ms ease-in-out infinite;
+}
+
+/* O parallax vem por `transform` inline; o bob anima só a translação vertical
+   de um filho imaginário, então usamos uma animação que não sobrescreve o
+   transform inline: aplicamos no elemento pai via margem animada. */
+@keyframes bob {
+  0%,
+  100% {
+    margin-top: -10px;
+    margin-bottom: calc(var(--sp-lg) + 10px);
+  }
+  50% {
+    margin-top: 10px;
+    margin-bottom: calc(var(--sp-lg) - 10px);
+  }
+}
+
+.title {
+  font-size: var(--fs-hero);
+  color: var(--c-text);
+  line-height: 1.2;
+}
+
+.subtitle {
+  font-size: var(--fs-body);
+  color: var(--c-text-soft);
+  line-height: 1.5;
+  max-width: 42ch;
+}
+
+.footer {
+  padding: 0 var(--sp-xl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-lg);
+}
+
+.dots {
+  display: flex;
+  justify-content: center;
+  gap: var(--sp-sm);
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 5px;
+  background: var(--c-dot);
+  transition: width 200ms ease, background 200ms ease;
+}
+
+.dotActive {
+  width: 26px;
+  background: var(--c-primary);
+}
+
+.next {
+  width: 100%;
+}
