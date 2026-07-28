@@ -184,18 +184,85 @@
   margin-bottom: var(--sp-md);
 }
 
-.indexItem {
-  width: 100%;
-  text-align: left;
-  padding: 12px 0;
-  font-size: var(--fs-body);
-  color: var(--reader-text);
-  border-bottom: 1px solid var(--reader-border);
-  min-height: 48px;
+.handle {
+  width: 48px;
+  height: 5px;
+  border-radius: 3px;
+  background: var(--reader-border);
+  margin: 0 auto var(--sp-md);
 }
 
-.indexActive {
+.trilha {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(104px, 1fr));
+  gap: var(--sp-md);
+}
+
+.paradaWrap {
+  display: flex;
+}
+
+.parada {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: var(--sp-sm) 4px;
+  border-radius: var(--r-lg);
+  color: var(--reader-text);
+  transition: transform 140ms ease, background 140ms ease;
+}
+
+.parada:active {
+  transform: scale(0.95);
+}
+
+.paradaBolha {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--c-primary) 14%, transparent);
+  color: var(--c-primary);
+  font-size: var(--fs-title);
   font-weight: 800;
+  border: 3px solid transparent;
+}
+
+.paradaLida .paradaBolha {
+  background: var(--c-mint);
+  color: var(--c-white);
+}
+
+.paradaAtual .paradaBolha {
+  background: var(--c-primary);
+  color: var(--c-white);
+  border-color: color-mix(in srgb, var(--c-primary) 45%, transparent);
+  animation: pulso 1800ms ease-in-out infinite;
+}
+
+@keyframes pulso {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.08);
+  }
+}
+
+.paradaTitulo {
+  font-size: var(--fs-tiny);
+  font-weight: 700;
+  text-align: center;
+  line-height: 1.2;
+  color: var(--reader-muted);
+}
+
+.paradaAtual .paradaTitulo {
   color: var(--c-primary);
 }
 

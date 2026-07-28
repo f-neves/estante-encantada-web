@@ -11,6 +11,7 @@ import ErrorState from '../components/ErrorState';
 import Icon, { type IconName } from '../components/Icon';
 import PressBounce from '../components/PressBounce';
 import { DEFAULT_AVATAR } from '../data/avatars';
+import { CATEGORIAS, categoriaDe } from '../data/categories';
 import { BookListItem, ProgressWithBook } from '../types';
 import styles from './HomeScreen.module.css';
 
@@ -72,6 +73,9 @@ export default function HomeScreen() {
   // ela esconderia livros sem motivo. Começa em "Todos".
   const [byAge, setByAge] = useState(!isDefaultProfile);
   const [query, setQuery] = useState('');
+  // Busca e filtro de idade são ferramentas de adulto: ficam atrás de um toque.
+  const [toolsOpen, setToolsOpen] = useState(false);
+  const [categoria, setCategoria] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -80,11 +84,25 @@ export default function HomeScreen() {
 
   const visibleBooks = useMemo(() => {
     const q = normalize(query.trim());
-    if (!q) {
-      return books;
+    return books.filter((b) => {
+      if (categoria && categoriaDe(b.title) !== categoria) {
+        return false;
+      }
+      if (q && !normalize(b.title).includes(q)) {
+        return false;
+      }
+      return true;
+    });
+  }, [books, query, categoria]);
+
+  const contagemPorCategoria = useMemo(() => {
+    const mapa: Record<string, number> = {};
+    for (const book of books) {
+      const id = categoriaDe(book.title);
+      mapa[id] = (mapa[id] ?? 0) + 1;
     }
-    return books.filter((b) => normalize(b.title).includes(q));
-  }, [books, query]);
+    return mapa;
+  }, [books]);
 
   const fetchData = useCallback(async () => {
     setBooks(await api.books.listBooks(byAge && childAge !== undefined ? { age: childAge } : {}));
@@ -140,6 +158,16 @@ export default function HomeScreen() {
             <p className={styles.subtle}>Que história vamos ler hoje? ✨</p>
           )}
         </div>
+        <button
+          type="button"
+          className={styles.adultBtn}
+          onClick={() => setToolsOpen((v) => !v)}
+          aria-expanded={toolsOpen}
+          aria-label="Buscar e filtrar"
+          title="Buscar e filtrar"
+        >
+          <Icon name="search" size="var(--icon-md)" />
+        </button>
         {/* Na coluna estreita o espaço é da saudação e do personagem; o
             atualizar fica só na versão desktop, onde sobra largura. */}
         {mode === 'web' ? (
@@ -176,41 +204,46 @@ export default function HomeScreen() {
         ) : null}
       </div>
 
-      <div className={styles.searchRow}>
-        <Icon
-          name="search"
-          size="var(--icon-sm)"
-          color="var(--c-text-soft)"
-          className={styles.searchIcon}
-        />
-        <input
-          className={styles.search}
-          type="search"
-          placeholder="Buscar livro..."
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          aria-label="Buscar livro"
-        />
-      </div>
-
-      {childAge !== undefined ? (
-        <div className={styles.filterRow}>
-          <button
-            type="button"
-            className={['chip', byAge ? 'chip-active' : ''].join(' ')}
-            onClick={() => setByAge(true)}
-            aria-pressed={byAge}
-          >
-            Para mim ({childAge} anos)
-          </button>
-          <button
-            type="button"
-            className={['chip', !byAge ? 'chip-active' : ''].join(' ')}
-            onClick={() => setByAge(false)}
-            aria-pressed={!byAge}
-          >
-            Todos
-          </button>
+      {/* Ferramentas do adulto: aparecem só quando pedidas. */}
+      {toolsOpen ? (
+        <div className={styles.tools}>
+          <div className={styles.searchRow}>
+            <Icon
+              name="search"
+              size="var(--icon-sm)"
+              color="var(--c-text-soft)"
+              className={styles.searchIcon}
+            />
+            <input
+              className={styles.search}
+              type="search"
+              placeholder="Buscar livro..."
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              aria-label="Buscar livro"
+              autoFocus
+            />
+          </div>
+          {childAge !== undefined ? (
+            <div className={styles.filterRow}>
+              <button
+                type="button"
+                className={['chip', byAge ? 'chip-active' : ''].join(' ')}
+                onClick={() => setByAge(true)}
+                aria-pressed={byAge}
+              >
+                Para {activeProfile?.name} ({childAge} anos)
+              </button>
+              <button
+                type="button"
+                className={['chip', !byAge ? 'chip-active' : ''].join(' ')}
+                onClick={() => setByAge(false)}
+                aria-pressed={!byAge}
+              >
+                Todas as idades
+              </button>
+            </div>
+          ) : null}
         </div>
       ) : null}
 
@@ -249,6 +282,37 @@ export default function HomeScreen() {
             </div>
           </Link>
         </FadeInUp>
+      ) : null}
+
+      {/* Prateleiras por tema: a criança escolhe pela cor e pelo desenho. */}
+      {!loading && !error && books.length > 0 ? (
+        <div className={styles.temas}>
+          <button
+            type="button"
+            className={[styles.tema, categoria === null ? styles.temaAtivo : ''].join(' ')}
+            style={{ ['--tema' as string]: 'var(--c-primary)' }}
+            onClick={() => setCategoria(null)}
+            aria-pressed={categoria === null}
+          >
+            <Icon name="home" size="var(--icon-md)" />
+            <span className={styles.temaLabel}>Tudo</span>
+            <span className={styles.temaCount}>{books.length}</span>
+          </button>
+          {CATEGORIAS.filter((c) => (contagemPorCategoria[c.id] ?? 0) > 0).map((c) => (
+            <button
+              key={c.id}
+              type="button"
+              className={[styles.tema, categoria === c.id ? styles.temaAtivo : ''].join(' ')}
+              style={{ ['--tema' as string]: c.color }}
+              onClick={() => setCategoria(categoria === c.id ? null : c.id)}
+              aria-pressed={categoria === c.id}
+            >
+              <Icon name={c.icon} size="var(--icon-md)" />
+              <span className={styles.temaLabel}>{c.label}</span>
+              <span className={styles.temaCount}>{contagemPorCategoria[c.id]}</span>
+            </button>
+          ))}
+        </div>
       ) : null}
 
       {loading ? (

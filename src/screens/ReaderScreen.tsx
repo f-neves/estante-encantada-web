@@ -470,23 +470,40 @@ export default function ReaderScreen() {
         label="Capítulos"
         className={styles.indexModal}
       >
+        {/* Caminho de bolinhas: mostra onde a criança está e quanto falta sem
+            depender de leitura. */}
         <div className={styles.indexCard}>
+          <div className={styles.handle} aria-hidden="true" />
           <h2 className={['display', styles.indexTitle].join(' ')}>Capítulos</h2>
-          <ul>
-            {chapters.map((ch, i) => (
-              <li key={ch.id}>
-                <button
-                  type="button"
-                  className={[styles.indexItem, i === current ? styles.indexActive : ''].join(' ')}
-                  onClick={() => {
-                    setCurrent(i);
-                    setShowIndex(false);
-                  }}
-                >
-                  {i + 1}. {ch.title}
-                </button>
-              </li>
-            ))}
+          <ul className={styles.trilha}>
+            {chapters.map((ch, i) => {
+              const lido = i < current;
+              const atual = i === current;
+              return (
+                <li key={ch.id} className={styles.paradaWrap}>
+                  <button
+                    type="button"
+                    className={[
+                      styles.parada,
+                      lido ? styles.paradaLida : '',
+                      atual ? styles.paradaAtual : '',
+                    ]
+                      .filter(Boolean)
+                      .join(' ')}
+                    onClick={() => {
+                      setCurrent(i);
+                      setShowIndex(false);
+                    }}
+                    aria-current={atual ? 'step' : undefined}
+                  >
+                    <span className={styles.paradaBolha}>
+                      {lido ? <Icon name="checkmark" size="var(--icon-md)" color="var(--c-white)" /> : i + 1}
+                    </span>
+                    <span className={['clamp-2', styles.paradaTitulo].join(' ')}>{ch.title}</span>
+                  </button>
+                </li>
+              );
+            })}
           </ul>
         </div>
       </Modal>

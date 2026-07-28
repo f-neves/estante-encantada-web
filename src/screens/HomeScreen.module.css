@@ -85,6 +85,84 @@
   transform: scale(0.94);
 }
 
+/* --- Ferramentas do adulto (busca e faixa etária) --- */
+.tools {
+  background: var(--c-bg-alt);
+  border-radius: var(--r-lg);
+  padding: var(--sp-md);
+  margin-bottom: var(--sp-md);
+  animation: abrir 200ms ease-out;
+}
+
+@keyframes abrir {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+}
+
+/* --- Prateleiras por tema --- */
+.temas {
+  display: flex;
+  gap: var(--sp-sm);
+  margin-bottom: var(--sp-lg);
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding-bottom: 2px;
+}
+
+.temas::-webkit-scrollbar {
+  display: none;
+}
+
+.tema {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-sm);
+  flex: none;
+  min-height: 64px;
+  padding: 0 var(--sp-lg);
+  border-radius: var(--r-lg);
+  background: color-mix(in srgb, var(--tema) 16%, var(--c-card));
+  color: var(--tema);
+  font-weight: 800;
+  font-size: var(--fs-small);
+  border: 3px solid transparent;
+  transition: transform 140ms ease, border-color 140ms ease;
+}
+
+.tema:active {
+  transform: scale(0.96);
+}
+
+.temaAtivo {
+  background: var(--tema);
+  color: var(--c-white);
+  border-color: color-mix(in srgb, var(--tema) 70%, #000);
+}
+
+.temaLabel {
+  white-space: nowrap;
+}
+
+.temaCount {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 26px;
+  height: 26px;
+  padding: 0 6px;
+  border-radius: var(--r-pill);
+  background: color-mix(in srgb, var(--c-white) 65%, transparent);
+  color: var(--tema);
+  font-size: var(--fs-tiny);
+}
+
+.temaAtivo .temaCount {
+  background: color-mix(in srgb, #000 22%, transparent);
+  color: var(--c-white);
+}
+
 /* --- Busca --- */
 .searchRow {
   position: relative;
@@ -101,6 +179,7 @@
 
 .search {
   width: 100%;
+  min-height: 56px;
   background: var(--c-card);
   border: 2px solid transparent;
   border-radius: var(--r-pill);
@@ -123,7 +202,6 @@
 .filterRow {
   display: flex;
   gap: var(--sp-sm);
-  margin-bottom: var(--sp-md);
   flex-wrap: wrap;
 }
 
