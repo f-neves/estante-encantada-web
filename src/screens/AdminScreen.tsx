@@ -126,7 +126,7 @@ export default function AdminScreen() {
   return (
     <>
       <ScreenHeader title="Administração" back="/configuracoes" />
-      <div className={styles.container}>
+      <div className={[styles.container, 'parent-area'].join(' ')}>
         {notice ? <p className={styles.notice}>{notice}</p> : null}
 
         <div className={styles.statsRow}>

@@ -15,6 +15,7 @@ import PinSetupModal from '../components/PinSetupModal';
 import PressBounce from '../components/PressBounce';
 import ConfirmDialog from '../components/ConfirmDialog';
 import { AVATAR_PACKS, DEFAULT_AVATAR } from '../data/avatars';
+import { isSoundEnabled, setSoundEnabled } from '../utils/sound';
 import {
   getReaderSettings,
   setReaderSettings,
@@ -58,6 +59,7 @@ export default function SettingsScreen() {
   const [avatar, setAvatar] = useState(DEFAULT_AVATAR);
   const [savedAccount, setSavedAccount] = useState(false);
   const [avatarPickerOpen, setAvatarPickerOpen] = useState(false);
+  const [soundOn, setSoundOn] = useState(() => isSoundEnabled());
 
   useEffect(() => {
     getReaderSettings().then((s) => {
@@ -194,8 +196,13 @@ export default function SettingsScreen() {
   return (
     <>
       <ScreenHeader title="Configurações" back="/" />
-      <div className={styles.container}>
+      <div className={[styles.container, 'parent-area'].join(' ')}>
         <PinSetupModal visible={pinModal} onCancel={() => setPinModal(false)} onDone={handlePinDone} />
+
+        <span className="parent-badge">
+          <Icon name="people" size="var(--icon-sm)" />
+          Área dos pais
+        </span>
 
         {/* Personagem ativo */}
         <section className={['card', styles.profileCard].join(' ')}>
@@ -233,6 +240,16 @@ export default function SettingsScreen() {
             </span>
             <Icon name="chevron-forward" size="var(--icon-md)" color="var(--c-text-soft)" />
           </button>
+          <div className={styles.divider} />
+          <Switch
+            checked={soundOn}
+            onChange={(v) => {
+              setSoundEnabled(v);
+              setSoundOn(v);
+            }}
+            label="Sons do aplicativo"
+            hint="Um plim curto a cada toque, para confirmar a ação."
+          />
           <div className={styles.divider} />
           <ModeToggle variant="row" />
         </div>

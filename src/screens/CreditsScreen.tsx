@@ -78,7 +78,7 @@ export default function CreditsScreen() {
         back="/configuracoes"
         subtitle="De onde vêm os textos, as capas e a narração."
       />
-      <div className={styles.container}>
+      <div className={[styles.container, 'parent-area'].join(' ')}>
         <section className="card">
           <h2 className="section-title">
             <Icon name="book" size="var(--icon-md)" />

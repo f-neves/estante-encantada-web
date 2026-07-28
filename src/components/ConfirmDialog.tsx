@@ -1,5 +1,6 @@
 import Modal from './Modal';
 import PressBounce from './PressBounce';
+import HoldButton from './HoldButton';
 import styles from './ConfirmDialog.module.css';
 
 interface Props {
@@ -10,6 +11,8 @@ interface Props {
   cancelLabel?: string;
   /** Deixa o botão de confirmar vermelho (excluir, remover PIN). */
   destructive?: boolean;
+  /** Exige segurar o botão: portão parental para o que não tem volta. */
+  hold?: boolean;
   onConfirm: () => void;
   onCancel: () => void;
 }
@@ -22,6 +25,7 @@ export default function ConfirmDialog({
   confirmLabel = 'Confirmar',
   cancelLabel = 'Cancelar',
   destructive,
+  hold,
   onConfirm,
   onCancel,
 }: Props) {
@@ -34,12 +38,21 @@ export default function ConfirmDialog({
           <PressBounce className={styles.cancel} onClick={onCancel}>
             {cancelLabel}
           </PressBounce>
-          <PressBounce
-            className={[styles.confirm, destructive ? styles.destructive : ''].join(' ')}
-            onClick={onConfirm}
-          >
-            {confirmLabel}
-          </PressBounce>
+          {hold ? (
+            <HoldButton
+              className={styles.confirm}
+              label={confirmLabel}
+              holdingLabel="Segure..."
+              onComplete={onConfirm}
+            />
+          ) : (
+            <PressBounce
+              className={[styles.confirm, destructive ? styles.destructive : ''].join(' ')}
+              onClick={onConfirm}
+            >
+              {confirmLabel}
+            </PressBounce>
+          )}
         </div>
       </div>
     </Modal>

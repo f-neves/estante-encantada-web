@@ -11,8 +11,10 @@ import ErrorState from '../components/ErrorState';
 import Modal from '../components/Modal';
 import PressBounce from '../components/PressBounce';
 import ListenBar from '../components/ListenBar';
+import ListenView, { dividirEmFrases } from '../components/ListenView';
 import ReaderSettingsSheet from '../components/ReaderSettingsSheet';
 import KaraokeText from '../components/KaraokeText';
+import { playSound } from '../utils/sound';
 import ChapterImage from '../components/ChapterImage';
 import CelebrationModal from '../components/CelebrationModal';
 import { countWords, readWordCount } from '../utils/reading';
@@ -57,8 +59,11 @@ export default function ReaderScreen() {
   const [theme, setTheme] = useState<ThemeName>('light');
   const [continuous, setContinuous] = useState(true);
   const [settingsOpen, setSettingsOpen] = useState(false);
+  // null = ninguém escolheu ainda; aí vale a idade do personagem.
+  const [listen, setListen] = useState<boolean | null>(null);
 
   const bodyRef = useRef<HTMLDivElement>(null);
+  const arrasteRef = useRef<{ x: number; y: number } | null>(null);
   const autoPlayNextRef = useRef(false);
   const advancedRef = useRef(false);
   const fractionRef = useRef(0);
@@ -91,6 +96,9 @@ export default function ReaderScreen() {
       }
       if (s.continuous !== undefined) {
         setContinuous(s.continuous);
+      }
+      if (s.listen !== undefined) {
+        setListen(s.listen);
       }
     });
   }, []);
@@ -128,6 +136,12 @@ export default function ReaderScreen() {
   function toggleContinuous(next: boolean) {
     setContinuous(next);
     persistSettings({ continuous: next });
+  }
+
+  function changeListen(next: boolean) {
+    setListen(next);
+    persistSettings({ listen: next });
+    playSound('open');
   }
 
   // --- Dados --------------------------------------------------------------
@@ -172,6 +186,7 @@ export default function ReaderScreen() {
       firstChapterEffectRef.current = false;
       return;
     }
+    playSound('page');
     fractionRef.current = 0;
     restoredRef.current = true;
     window.scrollTo({ top: 0, behavior: 'auto' });
@@ -302,6 +317,7 @@ export default function ReaderScreen() {
       setCompleted(true);
       speech.stop();
       player.pause();
+      playSound('reward');
       setCelebration(result.reward ? result.reward.label : 'Livro concluído!');
     } catch (e) {
       setError(e instanceof Error ? e.message : 'Não foi possível concluir');
@@ -347,6 +363,72 @@ export default function ReaderScreen() {
   const isFirst = current === 0;
   const isLast = current === chapters.length - 1;
   const t = THEMES[theme];
+
+  // Sem escolha salva, a idade decide: até 6 anos, a criança ainda não lê.
+  const idade = activeProfile ? new Date().getFullYear() - activeProfile.birthYear : 99;
+  const modoOuvir = (listen ?? idade <= 6) && audioSrc !== null;
+
+  const totalWords = countWords(chapter.content);
+  const palavraAtual =
+    readWordCount(status.currentTime, status.duration, wordTimings, totalWords) - 1;
+
+  function ouvirPalavra(indice: number) {
+    const inicio = wordTimings[indice];
+    if (inicio !== undefined) {
+      player.seekTo(Math.max(0, inicio - 0.05));
+      player.play();
+    }
+  }
+
+  if (modoOuvir) {
+    return (
+      <div
+        className={styles.reader}
+        style={{
+          ['--reader-bg' as string]: t.bg,
+          ['--reader-text' as string]: t.text,
+          ['--reader-title' as string]: t.title,
+          ['--reader-muted' as string]: t.muted,
+          ['--reader-border' as string]: t.border,
+          ['--reader-scale' as string]: String(fontScale),
+        }}
+      >
+        <ListenView
+          title={chapter.title}
+          imageUrl={chapter.imageUrl}
+          frases={dividirEmFrases(chapter.content)}
+          currentWord={palavraAtual}
+          playing={status.playing}
+          chapterIndex={current}
+          chapterCount={chapters.length}
+          onToggle={toggleNarration}
+          onSeekWord={ouvirPalavra}
+          onExit={() => changeListen(false)}
+        />
+
+        {isLast ? (
+          <div className={styles.finishWrap}>
+            <PressBounce
+              className={[styles.finish, completed ? styles.finishDone : ''].join(' ')}
+              onClick={handleFinish}
+              disabled={finishing || completed}
+            >
+              {completed ? (
+                <Icon name="checkmark-circle" size="var(--icon-md)" color="var(--c-white)" />
+              ) : null}
+              {finishing ? 'Salvando...' : completed ? 'Concluído' : 'Concluir leitura'}
+            </PressBounce>
+          </div>
+        ) : null}
+
+        <CelebrationModal
+          visible={celebration !== null}
+          message={celebration ?? ''}
+          onClose={() => setCelebration(null)}
+        />
+      </div>
+    );
+  }
 
   return (
     <div
@@ -404,7 +486,31 @@ export default function ReaderScreen() {
         </button>
       )}
 
-      <article className={styles.content}>
+      <article
+        className={styles.content}
+        onPointerDown={(e) => {
+          arrasteRef.current = { x: e.clientX, y: e.clientY };
+        }}
+        onPointerUp={(e) => {
+          // Arrastar para o lado vira o capítulo, como se vira a página de um
+          // livro. Os botões continuam ali para quem prefere tocar.
+          const inicio = arrasteRef.current;
+          arrasteRef.current = null;
+          if (!inicio) {
+            return;
+          }
+          const dx = e.clientX - inicio.x;
+          const dy = e.clientY - inicio.y;
+          if (Math.abs(dx) < 90 || Math.abs(dx) < Math.abs(dy) * 2) {
+            return;
+          }
+          if (dx < 0 && current < chapters.length - 1) {
+            setCurrent((c) => c + 1);
+          } else if (dx > 0 && current > 0) {
+            setCurrent((c) => c - 1);
+          }
+        }}
+      >
         <ChapterImage uri={chapter.imageUrl} />
         <h1 className={['display', styles.title].join(' ')}>{chapter.title}</h1>
 
@@ -522,6 +628,8 @@ export default function ReaderScreen() {
         onChangeRate={setRate}
         continuous={continuous}
         onToggleContinuous={toggleContinuous}
+        listen={listen ?? false}
+        onToggleListen={changeListen}
         hasAudio={audioSrc !== null}
       />
 

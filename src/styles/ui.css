@@ -14,6 +14,30 @@
   border-radius: var(--r-xl);
 }
 
+/* --- Área dos pais ---
+   Configurações, Créditos e Administração deixam de lado a tipografia
+   arredondada e o excesso de cor. A diferença visual avisa a criança que ali
+   não é o lugar dela, e avisa o adulto que ele saiu do mundo do brinquedo. */
+.parent-area {
+  --font-display: var(--font-body);
+}
+
+.parent-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  align-self: flex-start;
+  background: var(--c-bg-alt);
+  color: var(--c-text-soft);
+  border-radius: var(--r-pill);
+  padding: 6px 14px;
+  font-size: var(--fs-tiny);
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin-bottom: var(--sp-md);
+}
+
 /* --- Rótulo de seção ("Narração", "Conta", ...) --- */
 .section-label {
   font-size: var(--fs-small);

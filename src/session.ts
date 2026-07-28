@@ -130,6 +130,12 @@ export interface ReaderSettings {
   continuous?: boolean;
   /** O painel de narração já começa aberto no livro. Padrão: fechado. */
   narrationOpen?: boolean;
+  /**
+   * Modo Ouvir: uma frase por vez, letra grande, dois controles. Pensado para
+   * quem ainda não lê. Sem valor definido, o leitor decide pela idade do
+   * personagem (até 6 anos entra ligado).
+   */
+  listen?: boolean;
 }
 
 export async function getReaderSettings(): Promise<ReaderSettings | null> {

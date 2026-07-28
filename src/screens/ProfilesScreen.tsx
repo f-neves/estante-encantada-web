@@ -230,8 +230,9 @@ export default function ProfilesScreen() {
             ? `Excluir o perfil de ${pendingDelete.name}? O progresso, as medalhas e os favoritos dele serão apagados.`
             : ''
         }
-        confirmLabel="Excluir"
+        confirmLabel="Segure para excluir"
         destructive
+        hold
         onConfirm={confirmDelete}
         onCancel={() => setPendingDelete(null)}
       />

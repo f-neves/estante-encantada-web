@@ -87,6 +87,34 @@ então trocar de personagem muda a cara do site.
 
 O leitor mantém os temas próprios de leitura (claro, sépia e escuro), independentes disso.
 
+## Decisões de design para a primeira e a segunda infância
+
+O site atende dois públicos com necessidades diferentes: quem ainda não lê (3 a 6 anos) e quem
+está aprendendo (6 a 10). As escolhas abaixo saíram de uma revisão de usabilidade infantil.
+
+- **Ouvir em primeiro plano**: o botão de narração é grande, permanente e pulsa quando está
+  parado. Nada de esconder a função principal atrás de um painel.
+- **Modo Ouvir**: uma frase por vez em letra grande, dois controles apenas (ouvir e repetir a
+  frase). Liga sozinho para personagens de até 6 anos e pode ser desligado nos ajustes do leitor.
+- **Karaokê na palavra atual**: o trecho lido fica com fundo suave e a palavra corrente ganha
+  destaque sólido, que é o que sustenta o acompanhamento de quem soletra. Tocar numa palavra
+  faz a narração voltar até ela.
+- **A capa é o nome do livro**: a estante é uma grade de capas grandes; idade e número de
+  capítulos ficam como nota de rodapé, porque são informação para o adulto.
+- **Navegação por tema**: prateleiras com cor e ícone (Contos clássicos, Folclore brasileiro,
+  Aventuras) para escolher sem ler.
+- **Alvos de 64 px** no que a criança toca, com 48 px para o que é do adulto.
+- **Som curto no toque**, silenciável em Configurações, porque feedback redundante (ver, ouvir e
+  sentir) confirma a ação para quem não lê rótulo de estado.
+- **Área dos pais separada**: Configurações, Créditos e Administração usam tipografia do sistema,
+  menos cor e um selo "Área dos pais". Excluir um personagem exige segurar o botão por três
+  segundos, gesto que uma criança pequena não completa por acidente.
+- **Gestos**: arrastar para o lado vira o capítulo; no desktop, espaço toca e pausa, as setas
+  trocam de capítulo e `+`/`-` mudam a letra.
+
+Vale o aviso: isso é análise de especialista, não observação de uso. Vinte minutos com cinco
+crianças da faixa alvo confirmam ou derrubam boa parte dessas escolhas.
+
 ## Publicar (Netlify)
 
 O `netlify.toml` já traz o comando de build, o redirecionamento de página única e os cabeçalhos

@@ -124,6 +124,15 @@
   background: var(--c-mint);
 }
 
+/* No modo Ouvir o concluir fica acima dos dois controles. */
+.finishWrap {
+  padding: 0 var(--sp-xl) var(--sp-md);
+}
+
+.finishWrap .finish {
+  margin-top: 0;
+}
+
 /* --- Navegação inferior --- */
 .nav {
   position: sticky;

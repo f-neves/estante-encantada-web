@@ -30,6 +30,8 @@ interface Props {
   onChangeRate: (rate: number) => void;
   continuous: boolean;
   onToggleContinuous: (value: boolean) => void;
+  listen: boolean;
+  onToggleListen: (value: boolean) => void;
   hasAudio: boolean;
 }
 
@@ -49,6 +51,8 @@ export default function ReaderSettingsSheet({
   onChangeRate,
   continuous,
   onToggleContinuous,
+  listen,
+  onToggleListen,
   hasAudio,
 }: Props) {
   return (
@@ -56,6 +60,17 @@ export default function ReaderSettingsSheet({
       <div className={styles.sheet}>
         <div className={styles.handle} aria-hidden="true" />
         <h2 className={['display', styles.title].join(' ')}>Ajustes da leitura</h2>
+
+        {hasAudio ? (
+          <section className={styles.bloco}>
+            <Switch
+              checked={listen}
+              onChange={onToggleListen}
+              label="Modo Ouvir"
+              hint="Uma frase por vez, em letra grande, para quem ainda não lê."
+            />
+          </section>
+        ) : null}
 
         <section className={styles.bloco}>
           <p className={styles.rotulo}>Tamanho da letra</p>

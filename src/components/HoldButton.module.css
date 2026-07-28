@@ -1,0 +1,32 @@
+.botao {
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 52px;
+  padding: 12px var(--sp-xl);
+  border-radius: var(--r-pill);
+  background: var(--c-danger-bg);
+  color: var(--c-danger);
+  font-weight: 800;
+  font-size: var(--fs-body);
+  touch-action: none;
+  user-select: none;
+  transition: transform 140ms ease;
+}
+
+.segurando {
+  transform: scale(0.98);
+}
+
+.preenchimento {
+  position: absolute;
+  inset: 0 auto 0 0;
+  background: color-mix(in srgb, var(--c-danger) 32%, transparent);
+  transition: width 60ms linear;
+}
+
+.texto {
+  position: relative;
+}
