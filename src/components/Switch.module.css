@@ -1,0 +1,68 @@
+.row {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-md);
+}
+
+.info {
+  flex: 1;
+}
+
+.label {
+  display: block;
+  font-size: var(--fs-body);
+  font-weight: 800;
+  color: var(--c-text);
+  cursor: pointer;
+}
+
+.hint {
+  font-size: var(--fs-small);
+  color: var(--c-text-soft);
+  margin-top: 2px;
+}
+
+/* O input real fica invisível mas continua sendo o alvo do teclado e do
+   leitor de tela; a pista colorida é só a aparência. */
+.input {
+  position: absolute;
+  opacity: 0;
+  width: 52px;
+  height: 32px;
+  margin: 0;
+  cursor: pointer;
+}
+
+.track {
+  flex: none;
+  width: 52px;
+  height: 32px;
+  border-radius: var(--r-pill);
+  background: var(--c-dot);
+  padding: 3px;
+  display: flex;
+  transition: background 180ms ease;
+  cursor: pointer;
+}
+
+.thumb {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--c-white);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  transition: transform 180ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.input:checked ~ .track {
+  background: var(--c-primary);
+}
+
+.input:checked ~ .track .thumb {
+  transform: translateX(20px);
+}
+
+.input:focus-visible ~ .track {
+  outline: 3px solid color-mix(in srgb, var(--c-primary) 65%, transparent);
+  outline-offset: 2px;
+}

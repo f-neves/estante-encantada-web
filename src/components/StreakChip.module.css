@@ -1,0 +1,25 @@
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  align-self: flex-start;
+  background: color-mix(in srgb, var(--c-flame) 18%, var(--c-card));
+  color: var(--c-flame);
+  font-weight: 800;
+  font-size: var(--fs-small);
+  border-radius: var(--r-pill);
+  padding: 4px 12px;
+  margin-top: 6px;
+  animation: breathe 1800ms ease-in-out infinite;
+  transform-origin: left center;
+}
+
+@keyframes breathe {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.06);
+  }
+}

@@ -1,0 +1,249 @@
+/* Sistema de design "conto ilustrado / brinquedo", portado de
+   `mobile/src/theme.ts`. Tudo em variáveis CSS para que a tela Personalizar
+   consiga trocar paleta, esquema de cor, fundo, tipografia e cantos sem
+   recompilar nada. */
+
+:root {
+  /* --- Paleta lúdica (constante em todas as paletas) --- */
+  --c-yellow: #ffc93c;
+  --c-coral: #ff8a5b;
+  --c-mint: #22c9a8;
+  --c-sky: #4da8ff;
+  --c-pink: #ff6fa5;
+  --c-flame: #ff7a3c;
+  --c-white: #ffffff;
+
+  /* Bordas inferiores dos botões "chunky" (tom mais escuro de cada cor). */
+  --edge-primary: var(--c-primary-dark);
+  --edge-coral: #e0673b;
+  --edge-mint: #159e83;
+  --edge-sky: #2e86e0;
+  --edge-pink: #e04e86;
+  --edge-yellow: #e0a41f;
+  --edge-flame: #e05a1f;
+
+  /* --- Cores de estado --- */
+  --c-danger: #d8513b;
+  --c-danger-bg: #fde7e7;
+  --c-premium: #c98a00;
+  --c-premium-bg: #fff3d6;
+  --c-done: #1b9c6b;
+  --c-done-bg: #d8f7e6;
+
+  /* --- Espaçamento --- */
+  --sp-xs: 4px;
+  --sp-sm: 8px;
+  --sp-md: 12px;
+  --sp-lg: 16px;
+  --sp-xl: 24px;
+
+  /* --- Cantos (a personalização troca o fator) --- */
+  --corner-factor: 1;
+  --r-sm: calc(12px * var(--corner-factor));
+  --r-md: calc(18px * var(--corner-factor));
+  --r-lg: calc(24px * var(--corner-factor));
+  --r-xl: calc(30px * var(--corner-factor));
+  --r-pill: calc(999px * var(--corner-factor));
+
+  /* Alvo mínimo de toque: 64px, não 44. Crianças de 4 a 6 anos ainda têm
+     motricidade fina em formação e miram em alvos maiores. */
+  --touch-min: 64px;
+
+  /* --- Tipografia (a personalização troca a escala e a fonte display) --- */
+  --text-scale: 1;
+  --font-display: 'Fredoka', 'Trebuchet MS', system-ui, sans-serif;
+  --font-body: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+
+  --fs-hero: calc(28px * var(--text-scale));
+  --fs-title: calc(22px * var(--text-scale));
+  --fs-section: calc(18px * var(--text-scale));
+  --fs-body: calc(16px * var(--text-scale));
+  --fs-small: calc(13px * var(--text-scale));
+  --fs-tiny: calc(11px * var(--text-scale));
+
+  --icon-sm: 18px;
+  --icon-md: 24px;
+  --icon-lg: 32px;
+  --icon-xl: 44px;
+
+  /* --- Sombra suave e colorida --- */
+  --shadow-soft: 0 4px 10px rgba(91, 63, 214, 0.14);
+  --shadow-lift: 0 10px 24px rgba(91, 63, 214, 0.18);
+
+  /* --- Cores base (esquema claro, paleta padrão) --- */
+  --c-primary: #7c5cfc;
+  --c-primary-dark: #5b3fd6;
+  --c-bg: #fff7f0;
+  --c-bg-alt: #fdeff8;
+  --c-card: #ffffff;
+  --c-text: #3a2e5c;
+  --c-text-soft: #6e6586;
+  --c-line: #ece7f7;
+  --c-dot: #e0d9f5;
+
+  --app-bg-image: none;
+
+  color-scheme: light;
+}
+
+/* ------------------------------------------------------------------ *
+ * Paletas: trocam a cor primária e o calor do fundo.
+ * ------------------------------------------------------------------ */
+:root[data-palette='roxo'] {
+  --c-primary: #7c5cfc;
+  --c-primary-dark: #5b3fd6;
+  --c-bg: #fff7f0;
+  --c-bg-alt: #fdeff8;
+}
+
+:root[data-palette='coral'] {
+  --c-primary: #ff7a4d;
+  --c-primary-dark: #d95a30;
+  --c-bg: #fff6f1;
+  --c-bg-alt: #ffece2;
+}
+
+:root[data-palette='menta'] {
+  --c-primary: #16b493;
+  --c-primary-dark: #0e8d72;
+  --c-bg: #f2fdf9;
+  --c-bg-alt: #e2f7f0;
+}
+
+:root[data-palette='ceu'] {
+  --c-primary: #3d8ee8;
+  --c-primary-dark: #2a6dbb;
+  --c-bg: #f3f9ff;
+  --c-bg-alt: #e4f0fd;
+}
+
+:root[data-palette='rosa'] {
+  --c-primary: #f0559a;
+  --c-primary-dark: #c93b7c;
+  --c-bg: #fff5f9;
+  --c-bg-alt: #ffe8f1;
+}
+
+:root[data-palette='sol'] {
+  --c-primary: #e8a51c;
+  --c-primary-dark: #bd8207;
+  --c-bg: #fffaee;
+  --c-bg-alt: #fff2d6;
+}
+
+/* ------------------------------------------------------------------ *
+ * Esquema escuro. Aplicado por atributo (a escolha "automático" resolve
+ * a preferência do sistema em JS e grava o atributo).
+ * ------------------------------------------------------------------ */
+:root[data-scheme='dark'] {
+  --c-bg: #17161f;
+  --c-bg-alt: #221f2e;
+  --c-card: #262233;
+  --c-text: #f0ecff;
+  --c-text-soft: #a9a1c4;
+  --c-line: #332e45;
+  --c-dot: #3a3450;
+  --shadow-soft: 0 4px 12px rgba(0, 0, 0, 0.45);
+  --shadow-lift: 0 12px 28px rgba(0, 0, 0, 0.55);
+  --c-danger-bg: #3d2222;
+  --c-premium-bg: #3b3018;
+  --c-done-bg: #17352a;
+
+  color-scheme: dark;
+}
+
+/* No escuro, a primária ganha luminosidade para manter o contraste do texto
+   branco por cima e não sumir contra o fundo. */
+:root[data-scheme='dark'][data-palette='roxo'] {
+  --c-primary: #9b81ff;
+  --c-primary-dark: #7458e8;
+}
+:root[data-scheme='dark'][data-palette='coral'] {
+  --c-primary: #ff8e63;
+  --c-primary-dark: #e06c42;
+}
+:root[data-scheme='dark'][data-palette='menta'] {
+  --c-primary: #2fd3b0;
+  --c-primary-dark: #1ba98b;
+}
+:root[data-scheme='dark'][data-palette='ceu'] {
+  --c-primary: #5ea6f5;
+  --c-primary-dark: #3d80cc;
+}
+:root[data-scheme='dark'][data-palette='rosa'] {
+  --c-primary: #ff77b0;
+  --c-primary-dark: #d9558c;
+}
+:root[data-scheme='dark'][data-palette='sol'] {
+  --c-primary: #ffc247;
+  --c-primary-dark: #d99c1c;
+}
+
+/* ------------------------------------------------------------------ *
+ * Fundos decorativos (papel de parede do app).
+ * ------------------------------------------------------------------ */
+:root[data-background='gradiente'] {
+  --app-bg-image: radial-gradient(120% 80% at 50% 0%, color-mix(in srgb, var(--c-primary) 22%, transparent) 0%, transparent 62%);
+}
+
+:root[data-background='estrelas'] {
+  --app-bg-image:
+    radial-gradient(2px 2px at 12% 18%, color-mix(in srgb, var(--c-yellow) 85%, transparent) 50%, transparent 51%),
+    radial-gradient(2px 2px at 78% 12%, color-mix(in srgb, var(--c-yellow) 70%, transparent) 50%, transparent 51%),
+    radial-gradient(3px 3px at 34% 42%, color-mix(in srgb, var(--c-yellow) 55%, transparent) 50%, transparent 51%),
+    radial-gradient(2px 2px at 88% 58%, color-mix(in srgb, var(--c-primary) 60%, transparent) 50%, transparent 51%),
+    radial-gradient(2px 2px at 22% 74%, color-mix(in srgb, var(--c-primary) 50%, transparent) 50%, transparent 51%),
+    radial-gradient(3px 3px at 62% 88%, color-mix(in srgb, var(--c-yellow) 60%, transparent) 50%, transparent 51%),
+    radial-gradient(140% 90% at 50% 0%, color-mix(in srgb, var(--c-primary) 16%, transparent) 0%, transparent 70%);
+}
+
+:root[data-background='nuvens'] {
+  --app-bg-image:
+    radial-gradient(60% 34% at 18% 12%, color-mix(in srgb, var(--c-white) 78%, transparent) 0%, transparent 60%),
+    radial-gradient(52% 30% at 82% 26%, color-mix(in srgb, var(--c-white) 62%, transparent) 0%, transparent 60%),
+    radial-gradient(70% 36% at 42% 82%, color-mix(in srgb, var(--c-white) 52%, transparent) 0%, transparent 62%),
+    linear-gradient(180deg, color-mix(in srgb, var(--c-sky) 20%, transparent) 0%, transparent 55%);
+}
+
+/* Fonte do sistema no lugar da display arredondada. */
+:root[data-display-font='system'] {
+  --font-display: var(--font-body);
+}
+
+/* ------------------------------------------------------------------ *
+ * Base do documento.
+ * ------------------------------------------------------------------ */
+body {
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  color: var(--c-text);
+  background-color: var(--c-bg);
+  background-image: var(--app-bg-image);
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+/* Títulos usam a display arredondada: o peso já vem embutido na fonte. */
+.display {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+/* Foco visível e consistente (importante no modo Web, com teclado). */
+:where(a, button, input, select, textarea, [tabindex]):focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--c-primary) 65%, transparent);
+  outline-offset: 2px;
+  border-radius: var(--r-sm);
+}
+
+::selection {
+  background: color-mix(in srgb, var(--c-primary) 30%, transparent);
+}
+
+/* Barra de rolagem discreta, no tom da paleta (modo Web, desktop). */
+* {
+  scrollbar-color: color-mix(in srgb, var(--c-primary) 40%, transparent) transparent;
+  scrollbar-width: thin;
+}

@@ -1,0 +1,60 @@
+.small {
+  width: 60px;
+  height: 86px;
+  border-radius: var(--r-sm);
+  flex: none;
+}
+
+/* Altura limitada a uma fração da tela, como no app, para a capa nunca
+   ultrapassar a área visível. Proporção de livro. */
+.large {
+  height: min(40vh, 420px);
+  aspect-ratio: 2 / 3;
+  border-radius: var(--r-md);
+  align-self: center;
+  box-shadow: var(--shadow-soft);
+}
+
+.tile {
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  border-radius: var(--r-md);
+}
+
+.image {
+  object-fit: cover;
+  background: color-mix(in srgb, var(--c-primary) 14%, var(--c-card));
+  opacity: 0;
+  transition: opacity 300ms ease;
+}
+
+.loaded {
+  opacity: 1;
+}
+
+.fallback {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-xs);
+  padding: var(--sp-sm);
+  text-align: center;
+}
+
+.fallbackText {
+  color: var(--c-white);
+  font-weight: 800;
+  font-size: var(--fs-tiny);
+  line-height: 1.2;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.large.fallback .fallbackText,
+.tile.fallback .fallbackText {
+  font-size: var(--fs-body);
+}

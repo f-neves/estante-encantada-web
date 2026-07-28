@@ -1,0 +1,49 @@
+.card {
+  background: var(--c-card);
+  border-radius: var(--r-xl);
+  padding: var(--sp-xl);
+  box-shadow: var(--shadow-lift);
+  text-align: center;
+}
+
+.title {
+  font-size: var(--fs-title);
+  color: var(--c-text);
+}
+
+.message {
+  margin-top: var(--sp-sm);
+  color: var(--c-text-soft);
+  font-size: var(--fs-body);
+  line-height: 1.5;
+}
+
+.actions {
+  display: flex;
+  gap: var(--sp-sm);
+  margin-top: var(--sp-xl);
+}
+
+.cancel,
+.confirm {
+  flex: 1;
+  border-radius: var(--r-pill);
+  padding: 14px 16px;
+  font-weight: 800;
+  font-size: var(--fs-body);
+}
+
+.cancel {
+  background: var(--c-bg-alt);
+  color: var(--c-text-soft);
+}
+
+.confirm {
+  background: var(--c-primary);
+  color: var(--c-white);
+  box-shadow: var(--shadow-soft);
+}
+
+.destructive {
+  background: var(--c-danger);
+}
