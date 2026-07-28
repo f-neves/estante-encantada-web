@@ -1,0 +1,20 @@
+node_modules/
+dist/
+dist-ssr/
+.vite/
+*.local
+.env
+.env.*
+!.env.example
+
+# Editor / SO
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/*
+!.vscode/extensions.json
+
+# Saída do PWA (gerada no build)
+dev-dist/
+public/sw.js
+public/workbox-*.js
