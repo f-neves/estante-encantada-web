@@ -320,6 +320,24 @@ repositório `estante-encantada-web` criado e vazio, PostgreSQL rodando com o ba
 
 ---
 
+## 6.1 Estado da entrega (28/07/2026)
+
+As nove fases foram concluídas e commitadas, uma por fase. Cada uma fechou com `tsc --noEmit` e
+`vite build` limpos, e as telas foram conferidas nos dois modos com navegador automatizado
+(nenhum erro de console em nenhuma rota).
+
+Verificado de ponta a ponta: introdução, criação e troca de personagem, catálogo com busca e
+filtro, detalhe com favoritar, leitura com narração e karaokê (o destaque acompanha o áudio),
+conclusão de livro gerando medalha e sequência de dias, controle parental (criar PIN, ser
+barrado, errar, acertar) e personalização (paleta, escuro, fundo, cantos e tamanho do texto,
+inclusive persistindo entre telas e voltando ao padrão).
+
+Duas melhorias além do porte: miniaturas webp das capas (a estante baixava 4,4 MB de imagem e
+passou a baixar 364 KB) e o catálogo em pedaço separado, carregado sob demanda em vez de somado
+ao bundle principal.
+
+Falta só o que depende de você: conectar o repositório na Netlify para publicar.
+
 ## 7. Riscos e limites conhecidos
 
 - **Autoplay**: navegadores bloqueiam áudio sem gesto do usuário. A narração contínua entre

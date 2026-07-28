@@ -63,7 +63,7 @@ export interface BookFilters {
 }
 
 export async function listBooks(filters: BookFilters = {}): Promise<BookListItem[]> {
-  return allBooks()
+  return (await allBooks())
     .filter((b) => {
       if (filters.age !== undefined && !(b.ageMin <= filters.age && b.ageMax >= filters.age)) {
         return false;
@@ -77,7 +77,7 @@ export async function listBooks(filters: BookFilters = {}): Promise<BookListItem
 }
 
 export async function getBook(id: string): Promise<BookDetail> {
-  const book = findBook(id);
+  const book = await findBook(id);
   if (!book) {
     throw new ApiError(404, 'Livro não encontrado');
   }
@@ -193,8 +193,9 @@ export async function listProgress(childId: string): Promise<ProgressWithBook[]>
   const rows = (await store.getProgress())
     .filter((r) => r.childProfileId === childId)
     .sort((a, b) => b.updatedAt.localeCompare(a.updatedAt));
+  const books = await allBooks();
   return rows.flatMap((r) => {
-    const book = findBook(r.bookId);
+    const book = books.find((b) => b.id === r.bookId);
     if (!book) {
       return [];
     }
@@ -217,7 +218,7 @@ export async function saveProgress(
   bookId: string,
   input: ProgressInput,
 ): Promise<{ progress: ReadingProgress; reward: Reward | null }> {
-  const book = findBook(bookId);
+  const book = await findBook(bookId);
   if (!book) {
     throw new ApiError(404, 'Livro não encontrado');
   }
@@ -302,8 +303,9 @@ export async function getStreak(childId: string): Promise<number> {
 // --- Favoritos -----------------------------------------------------------
 export async function listFavorites(childId: string): Promise<FavoriteBook[]> {
   const favs = (await store.getFavorites()).filter((r) => r.childProfileId === childId);
+  const books = await allBooks();
   return favs.flatMap((f) => {
-    const book = findBook(f.bookId);
+    const book = books.find((b) => b.id === f.bookId);
     if (!book) {
       return [];
     }
