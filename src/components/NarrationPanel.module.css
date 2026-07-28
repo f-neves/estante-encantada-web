@@ -1,0 +1,50 @@
+.panel {
+  border-bottom: 1px solid var(--reader-border, var(--c-line));
+  padding: 6px var(--sp-lg);
+  animation: drop 200ms ease-out;
+}
+
+@keyframes drop {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+}
+
+.iconRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-sm);
+  padding: 6px 0;
+}
+
+.circle {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  transition: transform 140ms cubic-bezier(0.34, 1.56, 0.64, 1), background 160ms ease;
+}
+
+.circle:active {
+  transform: scale(0.92);
+}
+
+.outline {
+  border: 1px solid var(--c-primary);
+}
+
+.filled {
+  background: var(--c-primary);
+  border-color: var(--c-primary);
+}
+
+@media (hover: hover) {
+  .circle:hover {
+    filter: brightness(1.08);
+  }
+}

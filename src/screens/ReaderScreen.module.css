@@ -1,0 +1,234 @@
+/* O leitor troca as cores do site pelas do tema de leitura escolhido
+   (claro, sépia ou escuro), como no aplicativo. */
+.reader {
+  background: var(--reader-bg);
+  color: var(--reader-text);
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Na versão desktop, escapa do respiro da área de conteúdo e ocupa a faixa
+   inteira: ler é a tarefa da tela, sem moldura em volta. */
+:global(html[data-mode='web']) .reader {
+  margin: calc(-1 * var(--sp-xl));
+}
+
+.toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-sm);
+  padding: 10px var(--sp-lg);
+  border-bottom: 1px solid var(--reader-border);
+  background: var(--reader-bg);
+}
+
+.back {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  color: var(--reader-title);
+  flex: none;
+}
+
+.fontControls {
+  display: flex;
+  align-items: center;
+  margin-right: auto;
+}
+
+.fontButton {
+  padding: 4px 12px;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--reader-title);
+  min-height: 40px;
+}
+
+.fontButtonBig {
+  font-size: 22px;
+}
+
+.narrationToggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  color: var(--reader-title);
+}
+
+.themeControls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.swatch {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 2px solid #ccc;
+  transition: transform 140ms ease;
+}
+
+.swatch:active {
+  transform: scale(0.9);
+}
+
+.swatchActive {
+  border-color: var(--c-primary);
+  border-width: 3px;
+}
+
+.fallbackNarrate {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 100%;
+  padding: 12px;
+  border-bottom: 1px solid var(--reader-border);
+  color: var(--c-primary);
+  font-weight: 700;
+  font-size: var(--fs-small);
+}
+
+/* --- Conteúdo --- */
+.content {
+  flex: 1;
+  padding: var(--sp-xl);
+  width: 100%;
+  max-width: 70ch;
+  margin: 0 auto;
+}
+
+.position {
+  font-size: 13px;
+  color: var(--reader-muted);
+  margin-bottom: var(--sp-sm);
+}
+
+.title {
+  font-size: calc(22px * var(--reader-scale));
+  color: var(--reader-title);
+  margin-bottom: var(--sp-lg);
+  line-height: 1.25;
+}
+
+.body {
+  font-size: calc(18px * var(--reader-scale));
+  line-height: calc(30px * var(--reader-scale));
+  color: var(--reader-text);
+  white-space: pre-wrap;
+}
+
+/* Trecho já narrado (karaokê). */
+.body :global(mark[data-karaoke='read']) {
+  background: color-mix(in srgb, var(--c-primary) 28%, transparent);
+  color: inherit;
+  border-radius: 4px;
+}
+
+.finish {
+  width: 100%;
+  background: var(--c-primary);
+  color: var(--c-white);
+  border-radius: var(--r-pill);
+  padding: 16px;
+  font-size: var(--fs-body);
+  font-weight: 800;
+  margin-top: 28px;
+  box-shadow: var(--shadow-soft);
+}
+
+.finishDone {
+  background: var(--c-mint);
+}
+
+/* --- Navegação inferior --- */
+.nav {
+  position: sticky;
+  bottom: 0;
+  display: flex;
+  justify-content: space-between;
+  gap: var(--sp-sm);
+  padding: var(--sp-md) var(--sp-lg);
+  padding-bottom: calc(var(--sp-md) + env(safe-area-inset-bottom));
+  border-top: 1px solid var(--reader-border);
+  background: var(--reader-bg);
+}
+
+.navButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 10px var(--sp-lg);
+  border-radius: var(--r-pill);
+  background: color-mix(in srgb, var(--c-primary) 10%, transparent);
+  color: var(--c-primary);
+  font-size: var(--fs-small);
+  font-weight: 800;
+  min-height: 44px;
+  transition: transform 140ms ease, filter 140ms ease;
+}
+
+.navButton:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+.navButton:not(:disabled):active {
+  transform: scale(0.96);
+}
+
+@media (hover: hover) {
+  .navButton:not(:disabled):hover {
+    filter: brightness(0.96);
+  }
+}
+
+/* --- Índice de capítulos --- */
+.indexCard {
+  background: var(--reader-bg);
+  color: var(--reader-text);
+  border-radius: var(--r-lg) var(--r-lg) 0 0;
+  padding: var(--sp-xl);
+  max-height: 72vh;
+  overflow-y: auto;
+}
+
+.indexTitle {
+  font-size: var(--fs-section);
+  color: var(--reader-title);
+  margin-bottom: var(--sp-md);
+}
+
+.indexItem {
+  width: 100%;
+  text-align: left;
+  padding: 12px 0;
+  font-size: var(--fs-body);
+  color: var(--reader-text);
+  border-bottom: 1px solid var(--reader-border);
+  min-height: 48px;
+}
+
+.indexActive {
+  font-weight: 800;
+  color: var(--c-primary);
+}
+
+@media (min-width: 900px) {
+  .content {
+    padding: var(--sp-xl) var(--sp-xl) 48px;
+  }
+}

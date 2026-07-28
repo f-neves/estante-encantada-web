@@ -26,12 +26,13 @@
     align-items: flex-start;
   }
 
+  /* Moldura de aparelho no desktop. A rolagem continua sendo a da página
+     (um único elemento rolável em todos os modos, o que mantém simples o
+     auto-scroll do leitor e a restauração da posição de leitura). */
   .frame {
-    min-height: min(920px, calc(100dvh - 2 * var(--sp-xl)));
-    height: min(920px, calc(100dvh - 2 * var(--sp-xl)));
+    min-height: calc(100dvh - 2 * var(--sp-xl));
     border-radius: 36px;
     box-shadow: var(--shadow-lift), 0 0 0 10px color-mix(in srgb, var(--c-text) 12%, transparent);
-    overflow-y: auto;
   }
 }
 

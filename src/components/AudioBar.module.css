@@ -1,0 +1,55 @@
+.container {
+  margin-bottom: var(--sp-sm);
+}
+
+.barTouch {
+  padding: 12px 0;
+  cursor: pointer;
+}
+
+.track {
+  height: 6px;
+  border-radius: 3px;
+  background: var(--reader-border, var(--c-dot));
+  overflow: hidden;
+}
+
+.fill {
+  height: 100%;
+  border-radius: 3px;
+  background: var(--c-primary);
+  transition: width 120ms linear;
+}
+
+.times {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 4px;
+}
+
+.time {
+  font-size: var(--fs-small);
+  font-variant-numeric: tabular-nums;
+  color: var(--reader-muted, var(--c-text-soft));
+}
+
+.speedRow {
+  display: flex;
+  gap: var(--sp-sm);
+}
+
+.speedChip {
+  border: 1px solid var(--c-primary);
+  color: var(--c-primary);
+  border-radius: 12px;
+  padding: 3px 10px;
+  font-size: var(--fs-small);
+  font-weight: 700;
+  min-height: 28px;
+}
+
+.speedActive {
+  background: var(--c-primary);
+  color: var(--c-white);
+}
