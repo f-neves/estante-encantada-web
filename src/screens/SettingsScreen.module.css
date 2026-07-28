@@ -219,3 +219,18 @@
   font-size: var(--fs-small);
   color: var(--c-text-soft);
 }
+
+.creditsLink {
+  margin-top: var(--sp-sm);
+  color: var(--c-primary);
+  font-weight: 700;
+  font-size: var(--fs-small);
+  min-height: 44px;
+  padding: 0 var(--sp-md);
+}
+
+@media (hover: hover) {
+  .creditsLink:hover {
+    text-decoration: underline;
+  }
+}

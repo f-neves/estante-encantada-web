@@ -381,6 +381,9 @@ export default function SettingsScreen() {
             Estante Encantada
           </span>
           <span className={styles.appVersion}>v{APP_VERSION}</span>
+          <button type="button" className={styles.creditsLink} onClick={() => navigate('/creditos')}>
+            Créditos das histórias e imagens
+          </button>
         </div>
 
         <ConfirmDialog

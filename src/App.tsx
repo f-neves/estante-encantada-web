@@ -19,6 +19,7 @@ import SettingsScreen from './screens/SettingsScreen';
 import CustomizeScreen from './screens/CustomizeScreen';
 import AdminScreen from './screens/AdminScreen';
 import ProfilesScreen from './screens/ProfilesScreen';
+import CreditsScreen from './screens/CreditsScreen';
 
 // Sem personagem ativo não há o que ler: manda escolher, como faz o app.
 function RequireProfile({ children }: { children: ReactNode }) {
@@ -78,6 +79,7 @@ function AppRoutes() {
         <Route path="/configuracoes" element={<SettingsScreen />} />
         <Route path="/personalizar" element={<CustomizeScreen />} />
         <Route path="/admin" element={<AdminScreen />} />
+        <Route path="/creditos" element={<CreditsScreen />} />
         <Route path="/perfis" element={<ProfilesScreen />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Route>
