@@ -42,7 +42,7 @@
   width: 80px;
   height: 80px;
   border-radius: 50%;
-  background: var(--c-primary);
+  background: var(--tile-color, var(--c-primary));
   font-size: 44px;
 }
 

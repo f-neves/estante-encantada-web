@@ -97,6 +97,8 @@ export function AppearanceProvider({ children }: { children: ReactNode }) {
     root.dataset['displayFont'] = settings.displayFont;
     root.style.setProperty('--text-scale', String(settings.textScale));
     root.style.setProperty('--corner-factor', settings.corners === 'square' ? '0.34' : '1');
+    // Cor do ladrilho do avatar (Home, Configurações e lateral do desktop).
+    root.style.setProperty('--tile-color', settings.tileColor ?? 'var(--c-primary)');
 
     const themeColor = document.querySelector('meta[name="theme-color"]');
     if (themeColor) {
