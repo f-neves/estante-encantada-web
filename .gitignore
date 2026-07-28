@@ -18,3 +18,4 @@ Thumbs.db
 dev-dist/
 public/sw.js
 public/workbox-*.js
+bash.exe.stackdump
