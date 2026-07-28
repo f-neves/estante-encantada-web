@@ -1,0 +1,221 @@
+.container {
+  padding: var(--sp-lg);
+  padding-bottom: var(--sp-xl);
+}
+
+:global(html[data-mode='web']) .container {
+  padding: 0 0 var(--sp-xl);
+  max-width: 720px;
+}
+
+.lockWrap {
+  min-height: 70dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.forgot {
+  margin-top: var(--sp-lg);
+  padding: var(--sp-sm) var(--sp-lg);
+  color: var(--c-text-soft);
+  font-weight: 700;
+  font-size: var(--fs-small);
+  min-height: 44px;
+}
+
+/* --- Personagem --- */
+.profileCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sp-sm);
+  padding-top: var(--sp-xl);
+  padding-bottom: var(--sp-xl);
+}
+
+.profileAvatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: var(--c-primary);
+  font-size: 44px;
+}
+
+.profileName {
+  font-size: var(--fs-title);
+  color: var(--c-text);
+  margin-bottom: var(--sp-sm);
+}
+
+.statsRow {
+  display: flex;
+  gap: var(--sp-md);
+}
+
+/* --- Linhas de navegação dentro de um cartão --- */
+.linkRow {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-md);
+  width: 100%;
+  text-align: left;
+  padding: var(--sp-sm) 0;
+  min-height: 56px;
+}
+
+.linkIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--c-primary) 14%, transparent);
+  flex: none;
+}
+
+.linkText {
+  flex: 1;
+}
+
+.linkLabel {
+  display: block;
+  font-size: var(--fs-body);
+  font-weight: 800;
+  color: var(--c-text);
+}
+
+.linkHint {
+  display: block;
+  font-size: var(--fs-small);
+  color: var(--c-text-soft);
+  margin-top: 2px;
+}
+
+.divider {
+  height: 1px;
+  background: var(--c-line);
+  margin: var(--sp-md) 0;
+}
+
+/* --- Narração --- */
+.voiceLabel {
+  font-size: var(--fs-body);
+  font-weight: 800;
+  color: var(--c-text);
+  margin-bottom: var(--sp-sm);
+}
+
+.voiceRow {
+  display: flex;
+  gap: var(--sp-sm);
+  flex-wrap: wrap;
+}
+
+/* --- Conta local --- */
+.accountHint {
+  font-size: var(--fs-small);
+  color: var(--c-text-soft);
+  margin-bottom: var(--sp-md);
+}
+
+.accountRow {
+  display: flex;
+  gap: var(--sp-md);
+  align-items: flex-start;
+}
+
+.accountAvatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: var(--c-bg-alt);
+  border: 2px solid var(--c-primary);
+  font-size: 32px;
+  flex: none;
+  transition: transform 140ms ease;
+}
+
+.accountAvatar:active {
+  transform: scale(0.94);
+}
+
+.accountFields {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-sm);
+}
+
+.avatarPicker {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-sm);
+  margin: var(--sp-md) 0;
+}
+
+.avatarOption {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  background: var(--c-bg-alt);
+  font-size: 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.avatarSelected {
+  border-color: var(--c-primary);
+  background: color-mix(in srgb, var(--c-primary) 16%, var(--c-bg-alt));
+}
+
+/* --- Diversos --- */
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-sm);
+}
+
+.pinDone {
+  color: var(--c-done);
+  font-weight: 700;
+  font-size: var(--fs-small);
+  margin-bottom: var(--sp-md);
+}
+
+.adminButton {
+  margin-top: var(--sp-lg);
+}
+
+.replay {
+  margin-top: var(--sp-md);
+}
+
+.appRow {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  margin-top: var(--sp-xl);
+}
+
+.appName {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-sm);
+  font-size: var(--fs-body);
+  font-weight: 800;
+  color: var(--c-text);
+}
+
+.appVersion {
+  font-size: var(--fs-small);
+  color: var(--c-text-soft);
+}

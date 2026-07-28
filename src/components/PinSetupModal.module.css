@@ -1,0 +1,23 @@
+.container {
+  height: 100%;
+  background: var(--c-bg);
+  display: flex;
+  flex-direction: column;
+}
+
+.cancel {
+  align-self: flex-end;
+  color: var(--c-primary);
+  font-weight: 800;
+  font-size: var(--fs-body);
+  padding: var(--sp-lg);
+  margin-top: var(--sp-lg);
+  min-height: 44px;
+}
+
+.center {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

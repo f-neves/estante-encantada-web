@@ -1,0 +1,106 @@
+.container {
+  padding: var(--sp-lg);
+}
+
+:global(html[data-mode='web']) .container {
+  padding: 0;
+}
+
+.notice {
+  background: var(--c-danger-bg);
+  color: var(--c-danger);
+  font-weight: 700;
+  font-size: var(--fs-small);
+  border-radius: var(--r-md);
+  padding: var(--sp-md);
+  margin-bottom: var(--sp-md);
+}
+
+.statsRow {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: var(--sp-sm);
+}
+
+.section {
+  margin: var(--sp-xl) 0 var(--sp-sm);
+}
+
+.list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: var(--sp-sm);
+}
+
+.cardTop {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-sm);
+}
+
+.cardInfo {
+  flex: 1;
+  min-width: 0;
+}
+
+.name {
+  font-size: var(--fs-body);
+  font-weight: 800;
+  color: var(--c-text);
+}
+
+.email {
+  font-size: var(--fs-small);
+  color: var(--c-text-soft);
+  margin-top: 2px;
+}
+
+.childCount {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: var(--fs-small);
+  font-weight: 700;
+  color: var(--c-text-soft);
+  flex: none;
+}
+
+.toggleRow {
+  display: flex;
+  gap: var(--sp-sm);
+  margin-top: var(--sp-md);
+}
+
+.toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  border-radius: var(--r-pill);
+  padding: 8px var(--sp-lg);
+  border: 2px solid transparent;
+  font-size: var(--fs-small);
+  font-weight: 800;
+  min-height: 40px;
+  transition: filter 140ms ease, transform 140ms ease;
+}
+
+.toggle:active {
+  transform: scale(0.97);
+}
+
+.off {
+  background: var(--c-bg-alt);
+  color: var(--c-text-soft);
+}
+
+.on {
+  background: var(--c-premium-bg);
+  border-color: var(--c-yellow);
+  color: var(--c-premium);
+}
+
+.admin {
+  background: color-mix(in srgb, var(--c-primary) 16%, transparent);
+  border-color: var(--c-primary);
+  color: var(--c-primary);
+}
