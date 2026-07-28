@@ -1,0 +1,81 @@
+.bar {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-lg);
+  padding: var(--sp-md) var(--sp-lg);
+  border-bottom: 1px solid var(--reader-border, var(--c-line));
+}
+
+.play {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-sm);
+  min-height: 72px;
+  padding: 0 var(--sp-xl) 0 var(--sp-lg);
+  border-radius: var(--r-pill);
+  background: var(--c-primary);
+  color: var(--c-white);
+  font-size: var(--fs-section);
+  font-weight: 800;
+  box-shadow: 0 5px 0 var(--c-primary-dark);
+  flex: none;
+  transition: transform 140ms cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 140ms ease;
+}
+
+.play:active {
+  transform: translateY(4px);
+  box-shadow: 0 1px 0 var(--c-primary-dark);
+}
+
+@media (hover: hover) {
+  .play:hover {
+    filter: brightness(1.05);
+  }
+}
+
+/* Parado, o botão respira para chamar o toque. */
+.play:not(.playing) {
+  animation: convite 2600ms ease-in-out infinite;
+}
+
+@keyframes convite {
+  0%,
+  88%,
+  100% {
+    transform: scale(1);
+  }
+  94% {
+    transform: scale(1.035);
+  }
+}
+
+.label {
+  white-space: nowrap;
+}
+
+.progress {
+  flex: 1;
+  min-width: 0;
+}
+
+/* No celular o rótulo sai e sobra espaço para a barra de tempo. */
+@media (max-width: 480px) {
+  .bar {
+    gap: var(--sp-md);
+    padding: var(--sp-md);
+  }
+
+  .play {
+    min-width: 72px;
+    padding: 0;
+    justify-content: center;
+  }
+
+  .label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+  }
+}

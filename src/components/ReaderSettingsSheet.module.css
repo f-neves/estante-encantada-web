@@ -1,0 +1,151 @@
+.sheet {
+  background: var(--c-card);
+  border-radius: var(--r-xl) var(--r-xl) 0 0;
+  padding: var(--sp-md) var(--sp-lg) var(--sp-xl);
+  max-height: 78vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-lg);
+}
+
+.handle {
+  width: 48px;
+  height: 5px;
+  border-radius: 3px;
+  background: var(--c-dot);
+  align-self: center;
+}
+
+.title {
+  font-size: var(--fs-title);
+  color: var(--c-text);
+}
+
+.bloco {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-sm);
+}
+
+.rotulo {
+  font-size: var(--fs-body);
+  font-weight: 800;
+  color: var(--c-text);
+}
+
+/* --- Tamanho da letra --- */
+.fonteRow {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-md);
+}
+
+.fonteBtn {
+  width: 72px;
+  height: 72px;
+  border-radius: var(--r-lg);
+  background: var(--c-bg-alt);
+  color: var(--c-primary);
+  font-weight: 800;
+  font-size: 22px;
+  transition: transform 140ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.fonteBtnGrande {
+  font-size: 38px;
+}
+
+.fonteBtn:active {
+  transform: scale(0.94);
+}
+
+.fonteValor {
+  flex: 1;
+  text-align: center;
+  font-size: var(--fs-section);
+  font-weight: 800;
+  color: var(--c-text-soft);
+  font-variant-numeric: tabular-nums;
+}
+
+/* --- Opções em linha --- */
+.opcoes {
+  display: flex;
+  gap: var(--sp-sm);
+  flex-wrap: wrap;
+}
+
+.tema {
+  position: relative;
+  flex: 1 1 96px;
+  min-height: 88px;
+  border-radius: var(--r-lg);
+  border: 3px solid transparent;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  transition: transform 140ms ease, border-color 140ms ease;
+}
+
+.tema:active {
+  transform: scale(0.97);
+}
+
+.ativo {
+  border-color: var(--c-primary);
+}
+
+.temaAa {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 24px;
+}
+
+.temaLabel {
+  font-size: var(--fs-tiny);
+  font-weight: 700;
+  opacity: 0.75;
+}
+
+.check {
+  position: absolute;
+  top: -10px;
+  right: -6px;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--c-primary);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Chips grandes: o alvo mínimo da criança é 64px, não 32. */
+.chipao {
+  flex: 1 1 120px;
+  min-height: 64px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-sm);
+  border-radius: var(--r-lg);
+  border: 2px solid var(--c-primary);
+  background: var(--c-card);
+  color: var(--c-primary);
+  font-size: var(--fs-body);
+  font-weight: 800;
+  transition: transform 140ms ease;
+}
+
+.chipao:active {
+  transform: scale(0.97);
+}
+
+.chipaoAtivo {
+  background: var(--c-primary);
+  color: var(--c-white);
+}

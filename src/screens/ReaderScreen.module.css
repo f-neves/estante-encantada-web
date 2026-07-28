@@ -20,86 +20,56 @@
   z-index: 20;
   display: flex;
   align-items: center;
-  justify-content: space-between;
   gap: var(--sp-sm);
-  padding: 10px var(--sp-lg);
+  padding: var(--sp-xs) var(--sp-sm);
   border-bottom: 1px solid var(--reader-border);
   background: var(--reader-bg);
 }
 
-.back {
+/* Alvos de 64px, o mínimo que o design system do projeto define para o que a
+   criança toca. */
+.toolBtn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
+  width: 64px;
+  height: 64px;
   border-radius: 50%;
   color: var(--reader-title);
   flex: none;
+  transition: transform 140ms ease, background 140ms ease;
 }
 
-.fontControls {
-  display: flex;
-  align-items: center;
-  margin-right: auto;
+.toolBtn:active {
+  transform: scale(0.92);
 }
 
-.fontButton {
-  padding: 4px 12px;
-  font-size: 16px;
+@media (hover: hover) {
+  .toolBtn:hover {
+    background: color-mix(in srgb, var(--c-primary) 12%, transparent);
+  }
+}
+
+.chapterOf {
+  flex: 1;
+  text-align: center;
+  font-size: var(--fs-small);
   font-weight: 700;
-  color: var(--reader-title);
-  min-height: 40px;
-}
-
-.fontButtonBig {
-  font-size: 22px;
-}
-
-.narrationToggle {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  color: var(--reader-title);
-}
-
-.themeControls {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.swatch {
-  width: 26px;
-  height: 26px;
-  border-radius: 50%;
-  border: 2px solid #ccc;
-  transition: transform 140ms ease;
-}
-
-.swatch:active {
-  transform: scale(0.9);
-}
-
-.swatchActive {
-  border-color: var(--c-primary);
-  border-width: 3px;
+  color: var(--reader-muted);
 }
 
 .fallbackNarrate {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 6px;
+  gap: var(--sp-sm);
   width: 100%;
-  padding: 12px;
+  min-height: 64px;
+  padding: var(--sp-md);
   border-bottom: 1px solid var(--reader-border);
   color: var(--c-primary);
-  font-weight: 700;
-  font-size: var(--fs-small);
+  font-weight: 800;
+  font-size: var(--fs-body);
 }
 
 /* --- Conteúdo --- */
@@ -170,14 +140,16 @@
 .navButton {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
+  justify-content: center;
+  gap: var(--sp-xs);
   padding: 10px var(--sp-lg);
   border-radius: var(--r-pill);
-  background: color-mix(in srgb, var(--c-primary) 10%, transparent);
+  background: color-mix(in srgb, var(--c-primary) 12%, transparent);
   color: var(--c-primary);
-  font-size: var(--fs-small);
+  font-size: var(--fs-body);
   font-weight: 800;
-  min-height: 44px;
+  min-height: 64px;
+  flex: 1;
   transition: transform 140ms ease, filter 140ms ease;
 }
 

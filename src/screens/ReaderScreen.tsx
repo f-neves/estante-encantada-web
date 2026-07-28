@@ -10,7 +10,8 @@ import Loading from '../components/Loading';
 import ErrorState from '../components/ErrorState';
 import Modal from '../components/Modal';
 import PressBounce from '../components/PressBounce';
-import NarrationPanel from '../components/NarrationPanel';
+import ListenBar from '../components/ListenBar';
+import ReaderSettingsSheet from '../components/ReaderSettingsSheet';
 import KaraokeText from '../components/KaraokeText';
 import ChapterImage from '../components/ChapterImage';
 import CelebrationModal from '../components/CelebrationModal';
@@ -55,9 +56,7 @@ export default function ReaderScreen() {
   const [fontScale, setFontScale] = useState(1);
   const [theme, setTheme] = useState<ThemeName>('light');
   const [continuous, setContinuous] = useState(true);
-  // Aberto/fechado é transitório: começa no padrão salvo nas Configurações e
-  // abrir ou fechar aqui não muda esse padrão.
-  const [narrationExpanded, setNarrationExpanded] = useState(false);
+  const [settingsOpen, setSettingsOpen] = useState(false);
 
   const bodyRef = useRef<HTMLDivElement>(null);
   const autoPlayNextRef = useRef(false);
@@ -93,9 +92,6 @@ export default function ReaderScreen() {
       if (s.continuous !== undefined) {
         setContinuous(s.continuous);
       }
-      if (s.narrationOpen !== undefined) {
-        setNarrationExpanded(s.narrationOpen);
-      }
     });
   }, []);
 
@@ -129,12 +125,9 @@ export default function ReaderScreen() {
     persistSettings({ theme: next });
   }
 
-  function toggleContinuous() {
-    setContinuous((prev) => {
-      const next = !prev;
-      persistSettings({ continuous: next });
-      return next;
-    });
+  function toggleContinuous(next: boolean) {
+    setContinuous(next);
+    persistSettings({ continuous: next });
   }
 
   // --- Dados --------------------------------------------------------------
@@ -370,88 +363,49 @@ export default function ReaderScreen() {
       <div className={styles.toolbar}>
         <button
           type="button"
-          className={styles.back}
+          className={styles.toolBtn}
           onClick={() => navigate(`/livro/${bookId}`)}
           aria-label="Voltar ao livro"
         >
-          <Icon name="chevron-back" size="var(--icon-md)" />
+          <Icon name="chevron-back" size="var(--icon-lg)" />
         </button>
 
-        <div className={styles.fontControls}>
-          <button
-            type="button"
-            className={styles.fontButton}
-            onClick={() => changeFont(-0.15)}
-            aria-label="Diminuir a letra"
-          >
-            A-
-          </button>
-          <button
-            type="button"
-            className={[styles.fontButton, styles.fontButtonBig].join(' ')}
-            onClick={() => changeFont(0.15)}
-            aria-label="Aumentar a letra"
-          >
-            A+
-          </button>
-        </div>
+        <p className={styles.chapterOf}>
+          Capítulo {current + 1} de {chapters.length}
+        </p>
 
-        {audioSrc ? (
-          <button
-            type="button"
-            className={styles.narrationToggle}
-            onClick={() => setNarrationExpanded((v) => !v)}
-            aria-expanded={narrationExpanded}
-            aria-label={narrationExpanded ? 'Fechar a narração' : 'Abrir a narração'}
-          >
-            <Icon name={narrationExpanded ? 'chevron-up' : 'chevron-down'} size="var(--icon-md)" />
-          </button>
-        ) : null}
-
-        <div className={styles.themeControls}>
-          {(['light', 'sepia', 'dark'] as ThemeName[]).map((name) => (
-            <button
-              key={name}
-              type="button"
-              className={[styles.swatch, theme === name ? styles.swatchActive : ''].join(' ')}
-              style={{ background: THEMES[name].bg }}
-              onClick={() => changeTheme(name)}
-              aria-pressed={theme === name}
-              aria-label={`Tema ${name === 'light' ? 'claro' : name === 'sepia' ? 'sépia' : 'escuro'}`}
-            />
-          ))}
-        </div>
+        <button
+          type="button"
+          className={styles.toolBtn}
+          onClick={() => setSettingsOpen(true)}
+          aria-label="Ajustes da leitura"
+        >
+          <Icon name="settings" size="var(--icon-lg)" />
+        </button>
       </div>
 
       {audioSrc ? (
-        narrationExpanded ? (
-          <NarrationPanel
-            playing={status.playing}
-            currentTime={status.currentTime}
-            duration={status.duration}
-            rate={rate}
-            voice={voice}
-            voices={api.books.VOICES}
-            onToggle={toggleNarration}
-            onSeek={(fraction) => player.seekTo(fraction * (status.duration || 0))}
-            onChangeRate={setRate}
-            onChangeVoice={changeVoice}
-            continuous={continuous}
-            onToggleContinuous={toggleContinuous}
-          />
-        ) : null
+        <ListenBar
+          playing={status.playing}
+          currentTime={status.currentTime}
+          duration={status.duration}
+          rate={rate}
+          onToggle={toggleNarration}
+          onSeek={(fraction) => player.seekTo(fraction * (status.duration || 0))}
+        />
       ) : (
         <button type="button" className={styles.fallbackNarrate} onClick={toggleNarration}>
-          <Icon name={speech.speaking ? 'stop' : 'volume-high'} size="var(--icon-sm)" color="var(--c-primary)" />
-          {speech.speaking ? 'Parar narração' : 'Narrar'}
+          <Icon
+            name={speech.speaking ? 'stop' : 'volume-high'}
+            size="var(--icon-md)"
+            color="var(--c-primary)"
+          />
+          {speech.speaking ? 'Parar a narração' : 'Ouvir a história'}
         </button>
       )}
 
       <article className={styles.content}>
         <ChapterImage uri={chapter.imageUrl} />
-        <p className={styles.position}>
-          Capítulo {current + 1} de {chapters.length}
-        </p>
         <h1 className={['display', styles.title].join(' ')}>{chapter.title}</h1>
 
         <div ref={bodyRef}>
@@ -462,6 +416,10 @@ export default function ReaderScreen() {
               duration={status.duration}
               wordTimings={wordTimings}
               className={styles.body}
+              onSeekToWord={(seconds) => {
+                player.seekTo(seconds);
+                player.play();
+              }}
             />
           ) : (
             <p className={styles.body}>{chapter.content}</p>
@@ -532,6 +490,23 @@ export default function ReaderScreen() {
           </ul>
         </div>
       </Modal>
+
+      <ReaderSettingsSheet
+        visible={settingsOpen}
+        onClose={() => setSettingsOpen(false)}
+        fontScale={fontScale}
+        onChangeFont={changeFont}
+        theme={theme}
+        onChangeTheme={changeTheme}
+        voice={voice}
+        voices={api.books.VOICES}
+        onChangeVoice={changeVoice}
+        rate={rate}
+        onChangeRate={setRate}
+        continuous={continuous}
+        onToggleContinuous={toggleContinuous}
+        hasAudio={audioSrc !== null}
+      />
 
       <CelebrationModal
         visible={celebration !== null}

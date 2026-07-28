@@ -1,0 +1,28 @@
+.word {
+  border-radius: 6px;
+  transition: background-color 120ms ease, color 120ms ease, transform 120ms ease;
+}
+
+/* Rastro do que já foi narrado. */
+.read {
+  background: color-mix(in srgb, var(--c-primary) 18%, transparent);
+}
+
+/* A palavra que está sendo lida agora: é o que a criança segue com o olho. */
+.current {
+  background: var(--c-primary);
+  color: var(--c-white);
+  padding: 0 2px;
+  margin: 0 -2px;
+  box-shadow: 0 2px 0 color-mix(in srgb, var(--c-primary) 60%, #000);
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+@media (hover: hover) {
+  .clickable:hover {
+    background: color-mix(in srgb, var(--c-primary) 34%, transparent);
+  }
+}

@@ -102,16 +102,22 @@
   width: 100%;
 }
 
-/* Botão redondo só de ícone (voltar, fechar, editar). */
+/* Botão redondo só de ícone (voltar, fechar, editar). 48px é o piso para o
+   que o adulto toca; o que a criança toca usa `--touch-min` (64px). */
 .icon-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 44px;
-  height: 44px;
+  width: 48px;
+  height: 48px;
   border-radius: 50%;
   color: var(--c-text-soft);
   transition: background 160ms ease, color 160ms ease;
+}
+
+.icon-btn-child {
+  width: var(--touch-min);
+  height: var(--touch-min);
 }
 
 @media (hover: hover) {
@@ -158,8 +164,8 @@
   border: 2px solid transparent;
   border-radius: var(--r-pill);
   padding: 0 var(--sp-lg);
-  min-height: 48px;
-  font-size: var(--fs-small);
+  min-height: 56px;
+  font-size: var(--fs-body);
   font-weight: 700;
   box-shadow: var(--shadow-soft);
 }

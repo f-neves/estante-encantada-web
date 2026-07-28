@@ -16,11 +16,20 @@ interface Props {
   rate: number;
   onSeek: (fraction: number) => void;
   onChangeRate: (rate: number) => void;
+  /** A velocidade virou ajuste e vive na folha de ajustes do leitor. */
+  showSpeed?: boolean;
 }
 
-// Barra de tempo do áudio, com os tempos e a velocidade. Mesma linha 2 do
-// painel de narração do app.
-export default function AudioBar({ currentTime, duration, rate, onSeek, onChangeRate }: Props) {
+// Barra de tempo do áudio. Por padrão mostra só a posição e os tempos: quanto
+// menos controle na frente da criança, melhor.
+export default function AudioBar({
+  currentTime,
+  duration,
+  rate,
+  onSeek,
+  onChangeRate,
+  showSpeed = false,
+}: Props) {
   const progress = duration > 0 ? Math.min(1, Math.max(0, currentTime / duration)) : 0;
 
   function handleClick(e: MouseEvent<HTMLDivElement>) {
@@ -59,19 +68,21 @@ export default function AudioBar({ currentTime, duration, rate, onSeek, onChange
       </div>
       <div className={styles.times}>
         <span className={styles.time}>{formatTime(currentTime)}</span>
-        <div className={styles.speedRow}>
-          {RATES.map((r) => (
-            <button
-              key={r}
-              type="button"
-              className={[styles.speedChip, rate === r ? styles.speedActive : ''].join(' ')}
-              onClick={() => onChangeRate(r)}
-              aria-pressed={rate === r}
-            >
-              {r}x
-            </button>
-          ))}
-        </div>
+        {showSpeed ? (
+          <div className={styles.speedRow}>
+            {RATES.map((r) => (
+              <button
+                key={r}
+                type="button"
+                className={[styles.speedChip, rate === r ? styles.speedActive : ''].join(' ')}
+                onClick={() => onChangeRate(r)}
+                aria-pressed={rate === r}
+              >
+                {r}x
+              </button>
+            ))}
+          </div>
+        ) : null}
         <span className={styles.time}>{formatTime(duration)}</span>
       </div>
     </div>

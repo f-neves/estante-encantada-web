@@ -25,6 +25,10 @@ function greeting(): string {
   return 'Boa noite';
 }
 
+// Só o que é da criança fica nos atalhos grandes e coloridos, e com rótulo:
+// ícone sozinho não diz a um pré-leitor a diferença entre estrela e troféu.
+// Configurações é território dos pais e saiu daqui (virou o ícone discreto do
+// topo).
 const QUICK: {
   key: string;
   icon: IconName;
@@ -39,7 +43,7 @@ const QUICK: {
     color: 'var(--c-yellow)',
     edge: 'var(--edge-yellow)',
     to: '/recompensas',
-    label: 'Recompensas',
+    label: 'Minhas medalhas',
   },
   {
     key: 'favorites',
@@ -47,15 +51,7 @@ const QUICK: {
     color: 'var(--c-pink)',
     edge: 'var(--edge-pink)',
     to: '/favoritos',
-    label: 'Favoritos',
-  },
-  {
-    key: 'settings',
-    icon: 'settings',
-    color: 'var(--c-sky)',
-    edge: 'var(--edge-sky)',
-    to: '/configuracoes',
-    label: 'Configurações',
+    label: 'Meus preferidos',
   },
 ];
 
@@ -144,20 +140,30 @@ export default function HomeScreen() {
             <p className={styles.subtle}>Que história vamos ler hoje? ✨</p>
           )}
         </div>
-        <button
-          type="button"
-          className="icon-btn"
-          onClick={() => load(true)}
-          aria-label="Atualizar"
-          title="Atualizar"
-        >
-          <Icon
-            name="refresh"
-            size="var(--icon-md)"
-            color="var(--c-primary)"
-            className={refreshing ? styles.spinning : ''}
-          />
-        </button>
+        {/* Na coluna estreita o espaço é da saudação e do personagem; o
+            atualizar fica só na versão desktop, onde sobra largura. */}
+        {mode === 'web' ? (
+          <button
+            type="button"
+            className={styles.adultBtn}
+            onClick={() => load(true)}
+            aria-label="Atualizar"
+            title="Atualizar"
+          >
+            <Icon name="refresh" size="var(--icon-md)" className={refreshing ? styles.spinning : ''} />
+          </button>
+        ) : null}
+        {mode === 'app' ? (
+          <button
+            type="button"
+            className={styles.adultBtn}
+            onClick={() => navigate('/configuracoes')}
+            aria-label="Configurações (área dos pais)"
+            title="Configurações (área dos pais)"
+          >
+            <Icon name="settings" size="var(--icon-md)" />
+          </button>
+        ) : null}
         {mode === 'app' ? (
           <button
             type="button"
@@ -216,10 +222,9 @@ export default function HomeScreen() {
               className={styles.quickItem}
               style={{ background: quick.color, ['--edge' as string]: quick.edge }}
               onClick={() => navigate(quick.to)}
-              aria-label={quick.label}
-              title={quick.label}
             >
               <Icon name={quick.icon} size="var(--icon-lg)" color="var(--c-white)" />
+              <span className={styles.quickLabel}>{quick.label}</span>
             </PressBounce>
           </FadeInUp>
         ))}
@@ -267,7 +272,9 @@ export default function HomeScreen() {
             <li key={book.id}>
               <FadeInUp delay={Math.min(index, 6) * 60}>
                 <Link className={styles.card} to={`/livro/${book.id}`}>
-                  <BookCover uri={book.coverUrl} title={book.title} tile={mode === 'web'} />
+                  {/* A capa é o nome do livro para quem não lê: ela é o alvo,
+                      grande, e o texto vem embaixo. */}
+                  <BookCover uri={book.coverUrl} title={book.title} tile />
                   <div className={styles.cardText}>
                     <div className={styles.cardRow}>
                       <span className={['clamp-2', styles.bookTitle].join(' ')}>{book.title}</span>
@@ -282,9 +289,6 @@ export default function HomeScreen() {
                         : `${book.chapterCount} capítulo${book.chapterCount === 1 ? '' : 's'}`}
                     </span>
                   </div>
-                  <span className={styles.cardArrow} aria-hidden="true">
-                    <Icon name="chevron-forward" size="var(--icon-md)" color="var(--c-primary)" />
-                  </span>
                 </Link>
               </FadeInUp>
             </li>

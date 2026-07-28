@@ -240,13 +240,8 @@ export default function SettingsScreen() {
         {/* Narração */}
         <h3 className="section-label">Narração</h3>
         <div className="card">
-          <Switch
-            checked={settings.narrationOpen ?? false}
-            onChange={(v) => updateReader({ narrationOpen: v })}
-            label="Abrir narração ao entrar"
-            hint="O painel já começa aberto no livro."
-          />
-          <div className={styles.divider} />
+          {/* O botão de ouvir agora é fixo no leitor, então não há mais o
+              ajuste de "abrir o painel ao entrar": ele está sempre à mão. */}
           <Switch
             checked={settings.continuous ?? true}
             onChange={(v) => updateReader({ continuous: v })}

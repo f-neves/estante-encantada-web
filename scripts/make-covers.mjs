@@ -298,10 +298,174 @@ const sitio = `
   ${titulo(['Sítio do', 'Picapau Amarelo'], '#FFFFFF', 'rgba(58,46,92,0.45)')}
 </svg>`;
 
+// --- A Biblioteca Mágica da Vovó Rosa -------------------------------------
+const biblioteca = `
+<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">
+  <defs>
+    <linearGradient id="quarto" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#F7E3F2"/>
+      <stop offset="100%" stop-color="#FDEFF8"/>
+    </linearGradient>
+    <radialGradient id="magia" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0%" stop-color="${C.yellow}" stop-opacity="0.85"/>
+      <stop offset="100%" stop-color="${C.yellow}" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="${W}" height="${H}" fill="url(#quarto)"/>
+
+  <!-- estante com livros coloridos -->
+  ${[560, 760, 960]
+    .map(
+      (y) => `
+    <rect x="70" y="${y}" width="628" height="18" rx="9" fill="${C.wood}"/>
+    ${[0, 1, 2, 3, 4, 5, 6, 7]
+      .map((i) => {
+        const cores = [C.coral, C.mint, C.sky, C.pink, C.purple, C.yellow, C.red, C.leaf];
+        const h = 92 + ((i * 37 + y) % 46);
+        const x = 92 + i * 76;
+        return `<rect x="${x}" y="${y - h}" width="${54 + (i % 3) * 6}" height="${h}" rx="8" fill="${cores[(i + y / 200) % 8 | 0]}"/>`;
+      })
+      .join('')}`,
+    )
+    .join('')}
+
+  <!-- livro aberto flutuando, soltando brilho -->
+  <g transform="translate(384 400)">
+    <circle cx="0" cy="0" r="210" fill="url(#magia)"/>
+    <path d="M-160 60 q80 -46 156 -10 v-116 q-76 -36 -156 10 z" fill="#FFFFFF"/>
+    <path d="M160 60 q-80 -46 -156 -10 v-116 q76 -36 156 10 z" fill="#FFF7F0"/>
+    <path d="M-160 60 q80 -46 156 -10 q76 -36 156 10 l0 22 q-80 -46 -156 -10 q-76 -36 -156 10 z" fill="${C.coral}"/>
+    <g fill="${C.yellow}">
+      <circle cx="-70" cy="-140" r="9"/>
+      <circle cx="20" cy="-186" r="13"/>
+      <circle cx="96" cy="-134" r="8"/>
+      <circle cx="-130" cy="-96" r="7"/>
+      <circle cx="148" cy="-70" r="10"/>
+    </g>
+  </g>
+
+  ${titulo(['A Biblioteca Mágica', 'da Vovó Rosa'], '#FFFFFF', 'rgba(124,92,252,0.55)')}
+</svg>`;
+
+// --- O Robô que Aprendeu a Sonhar -----------------------------------------
+const robo = `
+<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">
+  <defs>
+    <linearGradient id="noiteRobo" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1F1B3A"/>
+      <stop offset="70%" stop-color="${C.purpleDark}"/>
+      <stop offset="100%" stop-color="#7B6BE8"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="${W}" height="${H}" fill="url(#noiteRobo)"/>
+  ${stars(40, 23)}
+
+  <!-- planeta e órbita -->
+  <circle cx="620" cy="300" r="58" fill="${C.mint}"/>
+  <ellipse cx="620" cy="300" rx="104" ry="30" fill="none" stroke="${C.yellow}" stroke-width="7" opacity="0.7" transform="rotate(-18 620 300)"/>
+
+  <!-- robô -->
+  <g transform="translate(384 760)">
+    <rect x="-14" y="-292" width="28" height="60" rx="14" fill="#9AA6C4"/>
+    <circle cx="0" cy="-306" r="20" fill="${C.yellow}"/>
+    <rect x="-130" y="-238" width="260" height="196" rx="52" fill="#C9D3E8"/>
+    <rect x="-96" y="-206" width="192" height="120" rx="34" fill="#2B2650"/>
+    <circle cx="-42" cy="-146" r="22" fill="${C.sky}"/>
+    <circle cx="42" cy="-146" r="22" fill="${C.sky}"/>
+    <path d="M-30 -108 q30 24 60 0" stroke="${C.mint}" stroke-width="8" fill="none" stroke-linecap="round"/>
+    <rect x="-104" y="-24" width="208" height="180" rx="42" fill="#B7C3DE"/>
+    <circle cx="0" cy="60" r="42" fill="${C.purple}"/>
+    <path d="M0 40 l12 24 h-24 z" fill="${C.yellow}"/>
+    <rect x="-176" y="-4" width="70" height="26" rx="13" fill="#9AA6C4"/>
+    <rect x="106" y="-4" width="70" height="26" rx="13" fill="#9AA6C4"/>
+    <rect x="-72" y="156" width="52" height="70" rx="20" fill="#9AA6C4"/>
+    <rect x="20" y="156" width="52" height="70" rx="20" fill="#9AA6C4"/>
+  </g>
+
+  <!-- balão de sonho -->
+  <g transform="translate(556 560)">
+    <circle cx="0" cy="0" r="66" fill="#FFFFFF" opacity="0.92"/>
+    <circle cx="-52" cy="52" r="18" fill="#FFFFFF" opacity="0.8"/>
+    <circle cx="-76" cy="78" r="10" fill="#FFFFFF" opacity="0.7"/>
+    <path d="M0 -30 q26 -26 44 0 q16 24 -44 54 q-60 -30 -44 -54 q18 -26 44 0 z" fill="${C.pink}"/>
+  </g>
+
+  ${titulo(['O Robô que', 'Aprendeu a Sonhar'])}
+</svg>`;
+
+// --- Os Três Porquinhos ---------------------------------------------------
+const porquinhos = `
+<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">
+  <defs>
+    <linearGradient id="ceuPorco" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#9BD9FF"/>
+      <stop offset="72%" stop-color="#D9F0FF"/>
+      <stop offset="100%" stop-color="#EFFBE4"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="${W}" height="${H}" fill="url(#ceuPorco)"/>
+  <g fill="#FFFFFF" opacity="0.9">
+    <ellipse cx="150" cy="360" rx="80" ry="38"/>
+    <ellipse cx="204" cy="346" rx="58" ry="44"/>
+    <ellipse cx="612" cy="300" rx="66" ry="32"/>
+  </g>
+
+  <path d="M0 620 q200 -90 392 -14 q190 74 376 -30 v576 H0 z" fill="${C.grass}"/>
+
+  <!-- três casinhas: palha, madeira e tijolo -->
+  <g transform="translate(96 560)">
+    <rect x="0" y="60" width="130" height="110" rx="12" fill="#E8C86A"/>
+    <path d="M-16 62 L65 -6 L146 62 z" fill="#D9B34E"/>
+    <rect x="46" y="112" width="38" height="58" rx="8" fill="${C.wood}"/>
+  </g>
+  <g transform="translate(300 580)">
+    <rect x="0" y="60" width="140" height="110" rx="12" fill="#C89A6B"/>
+    <path d="M-18 62 L70 -8 L158 62 z" fill="#A97B4E"/>
+    <rect x="52" y="112" width="38" height="58" rx="8" fill="${C.wood}"/>
+  </g>
+  <g transform="translate(520 550)">
+    <rect x="0" y="60" width="150" height="120" rx="12" fill="#E07A5F"/>
+    <path d="M-18 62 L75 -12 L168 62 z" fill="${C.red}"/>
+    <rect x="56" y="118" width="40" height="62" rx="8" fill="${C.wood}"/>
+    <g stroke="#FFFFFF" stroke-width="3" opacity="0.45">
+      <path d="M0 92 H150 M0 124 H150 M0 156 H150"/>
+    </g>
+  </g>
+
+  <!-- os três porquinhos -->
+  ${[
+    [176, 916],
+    [384, 972],
+    [594, 916],
+  ]
+    .map(
+      ([x, y], i) => `
+    <g transform="translate(${x} ${y}) scale(${1.25 - i * 0.05})">
+      <ellipse cx="0" cy="0" rx="72" ry="62" fill="#FFB4C8"/>
+      <circle cx="-46" cy="-46" r="20" fill="#FF9DBA"/>
+      <circle cx="46" cy="-46" r="20" fill="#FF9DBA"/>
+      <ellipse cx="0" cy="16" rx="26" ry="20" fill="#FF8FB0"/>
+      <circle cx="-9" cy="16" r="5" fill="#C9527A"/>
+      <circle cx="9" cy="16" r="5" fill="#C9527A"/>
+      <circle cx="-26" cy="-14" r="7" fill="${C.night}"/>
+      <circle cx="26" cy="-14" r="7" fill="${C.night}"/>
+    </g>`,
+    )
+    .join('')}
+
+  ${titulo(['Os Três', 'Porquinhos'], '#FFFFFF', 'rgba(58,46,92,0.45)')}
+</svg>`;
+
 const CAPAS = [
   { file: 'saci.jpg', svg: saci },
   { file: 'curupira.jpg', svg: curupira },
   { file: 'sitio.jpg', svg: sitio },
+  { file: 'livro02.jpg', svg: biblioteca },
+  { file: 'livro03.jpg', svg: robo },
+  { file: 'livro04.jpg', svg: porquinhos },
 ];
 
 await mkdir(outDir, { recursive: true });

@@ -23,9 +23,14 @@
 .greeting {
   font-size: var(--fs-hero);
   color: var(--c-text);
-  white-space: nowrap;
+  line-height: 1.15;
+  /* Nome comprido quebra em duas linhas em vez de virar reticências: a criança
+     precisa se reconhecer ali. */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
   overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 .subtle {
@@ -41,6 +46,26 @@
 @keyframes spin {
   to {
     transform: rotate(360deg);
+  }
+}
+
+/* Botões da área dos pais: discretos, sem a cara de brinquedo dos atalhos. */
+.adultBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  color: var(--c-text-soft);
+  flex: none;
+  transition: background 160ms ease, color 160ms ease;
+}
+
+@media (hover: hover) {
+  .adultBtn:hover {
+    background: var(--c-bg-alt);
+    color: var(--c-text);
   }
 }
 
@@ -120,8 +145,19 @@
 
 .quickItem {
   width: 100%;
-  height: var(--touch-min);
+  min-height: 88px;
+  flex-direction: column;
+  gap: 2px;
+  padding: var(--sp-sm);
   box-shadow: var(--shadow-soft);
+}
+
+.quickLabel {
+  color: var(--c-white);
+  font-size: var(--fs-small);
+  font-weight: 800;
+  line-height: 1.1;
+  text-align: center;
 }
 
 /* --- Continuar lendo --- */
@@ -174,21 +210,24 @@
   margin-top: 4px;
 }
 
-/* --- Lista de livros (versão App) --- */
+/* --- Estante: grade de capas grandes, nos dois modos ---
+   A capa é o que a criança reconhece. Em coluna estreita cabem duas por
+   linha, o que mantém o alvo de toque bem acima do mínimo. */
 .list {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
   gap: var(--sp-md);
   padding-bottom: var(--sp-xl);
 }
 
 .card {
   display: flex;
-  align-items: center;
-  gap: var(--sp-md);
+  flex-direction: column;
+  gap: var(--sp-sm);
+  height: 100%;
   background: var(--c-card);
   border-radius: var(--r-lg);
-  padding: var(--sp-md);
+  padding: var(--sp-sm);
   box-shadow: var(--shadow-soft);
   transition: transform 160ms ease, box-shadow 160ms ease;
 }
@@ -222,34 +261,23 @@
   color: var(--c-text);
 }
 
+/* Faixa etária e número de capítulos são informação para o adulto escolher,
+   não para a criança: ficam pequenas e discretas. */
 .bookMeta {
   display: block;
-  font-size: var(--fs-small);
+  font-size: var(--fs-tiny);
   color: var(--c-text-soft);
-  margin-top: 6px;
+  margin-top: 2px;
 }
 
-.cardArrow {
-  display: inline-flex;
-  flex: none;
-}
-
-/* --- Grade de capas (versão desktop) --- */
+/* --- Versão desktop: mais espaço entre as capas --- */
 :global(html[data-mode='web']) .list {
-  display: grid;
   grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
   gap: var(--sp-lg);
 }
 
 :global(html[data-mode='web']) .card {
-  flex-direction: column;
-  align-items: stretch;
-  gap: var(--sp-sm);
-  height: 100%;
-}
-
-:global(html[data-mode='web']) .cardArrow {
-  display: none;
+  padding: var(--sp-md);
 }
 
 :global(html[data-mode='web']) .continueCard {
