@@ -65,8 +65,10 @@ export async function signInAutomatically(): Promise<User> {
     return offline.getMe();
   }
   const email = await getDevEmail();
-  const result = await devLogin(email);
-  return result.user;
+  const local = await offline.getMe();
+  const result = await devLogin(email, local.name);
+  // O backend não guarda ícone; ele vem sempre da preferência local.
+  return { ...result.user, avatar: local.avatar ?? '🧒' };
 }
 
 /** Atualiza nome, e-mail e ícone da identidade local (tela de Configurações). */

@@ -1,0 +1,77 @@
+/* Versão App: barra fina no topo, como o cabeçalho do stack nativo. */
+.appBar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: var(--sp-sm);
+  min-height: 56px;
+  padding: var(--sp-sm) var(--sp-md);
+  background: color-mix(in srgb, var(--c-bg) 88%, transparent);
+  backdrop-filter: blur(8px);
+}
+
+.appBar .title {
+  font-size: var(--fs-section);
+}
+
+/* Versão desktop: título grande da página. */
+.pageHead {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-md);
+  margin-bottom: var(--sp-lg);
+  flex-wrap: wrap;
+}
+
+.pageHead .title {
+  font-size: var(--fs-hero);
+}
+
+.titleWrap {
+  flex: 1;
+  min-width: 0;
+}
+
+.title {
+  color: var(--c-text);
+  line-height: 1.2;
+}
+
+.subtitle {
+  color: var(--c-text-soft);
+  font-size: var(--fs-small);
+  margin-top: 2px;
+}
+
+.back {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  color: var(--c-primary);
+  font-weight: 800;
+  font-size: var(--fs-body);
+  min-height: 44px;
+  min-width: 44px;
+  border-radius: var(--r-pill);
+  padding-right: var(--sp-sm);
+  flex: none;
+}
+
+@media (hover: hover) {
+  .back:hover {
+    background: color-mix(in srgb, var(--c-primary) 12%, transparent);
+  }
+}
+
+.backText {
+  padding-right: var(--sp-xs);
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-sm);
+  flex: none;
+}
