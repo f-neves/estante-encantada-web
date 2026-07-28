@@ -8,10 +8,10 @@ interface Props {
   /** `sheet` sobe de baixo (índice de capítulos); `center` aparece no meio. */
   variant?: 'center' | 'sheet' | 'full';
   /** Rótulo acessível do diálogo. */
-  label?: string;
+  label?: string | undefined;
   /** Clique fora fecha? Ligado por padrão. */
   dismissable?: boolean;
-  className?: string;
+  className?: string | undefined;
 }
 
 // Usa o <dialog> nativo: já entrega trava de foco, Esc para fechar e camada

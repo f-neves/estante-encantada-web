@@ -8,6 +8,7 @@ import { cp, mkdir, readdir, stat, copyFile } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import sharp from 'sharp';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const webRoot = path.resolve(here, '..');
@@ -69,6 +70,39 @@ async function syncDir(from, to) {
   return { copied, skipped, bytes };
 }
 
+// As capas originais chegam a 2 MB, peso demais para a lista e a grade da
+// estante. Cada uma vira uma miniatura webp de 360px, usada em tudo que não
+// seja a capa grande da tela de detalhe.
+const THUMB_WIDTH = 360;
+
+async function buildThumbnails() {
+  const from = path.join(webRoot, 'public', 'uploads', 'covers');
+  const to = path.join(from, 'thumbs');
+  if (!existsSync(from)) {
+    return;
+  }
+  await mkdir(to, { recursive: true });
+  const files = (await readdir(from, { withFileTypes: true }))
+    .filter((e) => e.isFile() && /\.(png|jpe?g|webp)$/i.test(e.name))
+    .map((e) => e.name);
+
+  let built = 0;
+  let bytes = 0;
+  for (const file of files) {
+    const dest = path.join(to, `${path.parse(file).name}.webp`);
+    if (existsSync(dest)) {
+      continue;
+    }
+    await sharp(path.join(from, file))
+      .resize({ width: THUMB_WIDTH, withoutEnlargement: true })
+      .webp({ quality: 80 })
+      .toFile(dest);
+    built += 1;
+    bytes += (await stat(dest)).size;
+  }
+  console.log(`  miniaturas: ${built} geradas, ${files.length - built} já existiam (${mb(bytes)})`);
+}
+
 async function main() {
   if (!existsSync(appRoot)) {
     console.error(`App não encontrado em: ${appRoot}`);
@@ -86,6 +120,8 @@ async function main() {
     total.skipped += result.skipped;
     total.bytes += result.bytes;
   }
+
+  await buildThumbnails();
 
   if (existsSync(BOOKS_JSON.from)) {
     await mkdir(path.dirname(BOOKS_JSON.to), { recursive: true });

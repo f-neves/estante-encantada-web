@@ -5,8 +5,8 @@ interface Props {
   children: ReactNode;
   /** Atraso em milissegundos, para escalonar listas. */
   delay?: number;
-  className?: string;
-  style?: CSSProperties;
+  className?: string | undefined;
+  style?: CSSProperties | undefined;
 }
 
 // Entrada suave: surge subindo levemente, como o FadeInUp do app.

@@ -1,0 +1,48 @@
+.container {
+  padding: var(--sp-lg);
+}
+
+:global(html[data-mode='web']) .container {
+  padding: 0;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: var(--sp-md);
+}
+
+.badge {
+  height: 100%;
+  background: var(--c-card);
+  border-radius: var(--r-lg);
+  padding: var(--sp-lg);
+  box-shadow: var(--shadow-soft);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--sp-sm);
+}
+
+.medal {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+}
+
+.label {
+  font-size: var(--fs-small);
+  font-weight: 800;
+  color: var(--c-text);
+  line-height: 1.3;
+}
+
+.date {
+  font-size: var(--fs-tiny);
+  color: var(--c-text-soft);
+  margin-top: auto;
+}

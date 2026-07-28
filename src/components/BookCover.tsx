@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { coverSource } from '../media';
+import { useEffect, useState } from 'react';
+import { coverSource, coverThumbSource } from '../media';
 import Icon from './Icon';
 import styles from './BookCover.module.css';
 
@@ -24,20 +24,33 @@ function colorFor(seed: string): string {
 interface Props {
   uri: string | null;
   title: string;
-  /** Capa grande (tela de detalhe). */
+  /** Capa grande (tela de detalhe): usa sempre o arquivo original. */
   large?: boolean;
-  /** Capa de grade (modo Web), que preenche a largura da célula. */
+  /** Capa de grade (versão desktop), que preenche a largura da célula. */
   tile?: boolean;
 }
 
 export default function BookCover({ uri, title, large, tile }: Props) {
-  const [failed, setFailed] = useState(false);
+  // Tenta a miniatura primeiro e cai para o original; só depois desiste e
+  // mostra a capa ilustrada de reserva.
+  const candidates = uri
+    ? large
+      ? [coverSource(uri)]
+      : [coverThumbSource(uri), coverSource(uri)].filter((s): s is string => s !== null)
+    : [];
+
+  const [attempt, setAttempt] = useState(0);
   const [loaded, setLoaded] = useState(false);
 
-  const sizeClass = large ? styles.large : tile ? styles.tile : styles.small;
-  const src = uri ? coverSource(uri) : null;
+  useEffect(() => {
+    setAttempt(0);
+    setLoaded(false);
+  }, [uri]);
 
-  if (!src || failed) {
+  const src = candidates[attempt];
+  const sizeClass = large ? styles.large : tile ? styles.tile : styles.small;
+
+  if (!src) {
     return (
       <div
         className={[sizeClass, styles.fallback].join(' ')}
@@ -58,7 +71,7 @@ export default function BookCover({ uri, title, large, tile }: Props) {
       loading="lazy"
       decoding="async"
       onLoad={() => setLoaded(true)}
-      onError={() => setFailed(true)}
+      onError={() => setAttempt((n) => n + 1)}
     />
   );
 }

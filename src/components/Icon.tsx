@@ -112,8 +112,10 @@ interface Props {
   /** Aceita número (px) ou qualquer medida CSS, como `var(--icon-lg)`. */
   size?: number | string;
   color?: string;
-  className?: string;
-  style?: CSSProperties;
+  // `| undefined` explícito: as classes vindas de CSS Modules são tipadas como
+  // `string | undefined`, e o projeto usa exactOptionalPropertyTypes.
+  className?: string | undefined;
+  style?: CSSProperties | undefined;
 }
 
 export default function Icon({
@@ -130,8 +132,8 @@ export default function Icon({
       color={color}
       aria-hidden="true"
       focusable="false"
-      {...(className !== undefined ? { className } : {})}
-      {...(style !== undefined ? { style } : {})}
+      className={className}
+      style={style}
     />
   );
 }
