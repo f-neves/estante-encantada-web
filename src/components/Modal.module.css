@@ -1,11 +1,16 @@
+/* Regra de ouro daqui: nenhum diálogo pode passar da tela sem poder rolar.
+   O <dialog> nasce com `max-height: 80vh` do navegador, mas o conteúdo dentro
+   dele transborda se ninguém disser o contrário, e é assim que um botão de
+   confirmar acaba embaixo da borda da janela. */
 .dialog {
   border: none;
   padding: 0;
   background: transparent;
   color: inherit;
   max-width: none;
-  max-height: none;
-  overflow: visible;
+  max-height: 100dvh;
+  overflow: hidden;
+  display: flex;
 }
 
 .dialog::backdrop {
@@ -14,27 +19,38 @@
   animation: fade 180ms ease-out;
 }
 
+/* Todo conteúdo rola por dentro quando não couber. */
+.content {
+  width: 100%;
+  max-height: 100%;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+/* --- Centralizado (confirmações, celebração) --- */
 .center {
   margin: auto;
   width: min(100% - 2 * var(--sp-xl), 380px);
+  max-height: calc(100dvh - 2 * var(--sp-xl));
 }
 
 .center .content {
   animation: pop 260ms cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-/* Folha que sobe de baixo, como o índice de capítulos do app. */
+/* --- Folha que sobe de baixo (índice de capítulos, ajustes do leitor) ---
+   Fica colada embaixo, mas nunca ultrapassa a altura da janela. */
 .sheet {
   margin: auto auto 0;
   width: min(100%, 620px);
-  max-height: 72vh;
+  max-height: min(78dvh, calc(100dvh - var(--sp-lg)));
 }
 
 .sheet .content {
   animation: slideUp 240ms ease-out;
 }
 
-/* Tela cheia (fluxo do PIN parental). */
+/* --- Tela cheia (fluxo do PIN parental) --- */
 .full {
   margin: 0;
   width: 100vw;

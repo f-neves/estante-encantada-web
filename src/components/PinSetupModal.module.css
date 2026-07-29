@@ -1,5 +1,5 @@
 .container {
-  height: 100%;
+  min-height: 100%;
   background: var(--c-bg);
   display: flex;
   flex-direction: column;
@@ -15,9 +15,12 @@
   min-height: 44px;
 }
 
+/* O teclado do PIN é alto: numa janela baixa ele precisa poder subir, senão
+   os últimos dígitos ficariam fora da tela. */
 .center {
   flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
+  padding-bottom: var(--sp-lg);
 }

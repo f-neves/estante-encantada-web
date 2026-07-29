@@ -15,6 +15,13 @@ apresentações**, alternáveis por um botão:
 A escolha fica guardada no navegador. Sem escolha, o site decide pela largura da tela
 (abaixo de 900 px abre na versão app).
 
+No desktop, a versão app vira uma moldura de aparelho de **430x932** (proporção de celular
+atual), com altura fixa e rolagem por dentro: a moldura inteira cabe num print, basta reduzir o
+zoom se a janela for mais baixa que isso. Arrastar com o mouse rola, como num aparelho de
+toque, tanto na vertical quanto nas faixas laterais (temas, introdução). Clique simples continua
+sendo clique; o arrasto só começa depois de alguns pixels de movimento, e o clique logo em
+seguida é engolido para não abrir o livro sem querer.
+
 ## Começando
 
 ```bash

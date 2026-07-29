@@ -19,3 +19,6 @@ dev-dist/
 public/sw.js
 public/workbox-*.js
 bash.exe.stackdump
+
+# Prints enviados para correcao (trabalho, nao codigo)
+corrigir/

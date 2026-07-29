@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import Icon, { type IconName } from '../components/Icon';
+import { useDragScroll } from '../hooks/useDragScroll';
 import styles from './OnboardingScreen.module.css';
 
 interface Slide {
@@ -38,6 +39,16 @@ export default function OnboardingScreen({ onDone }: Props) {
   const trackRef = useRef<HTMLDivElement>(null);
   const [index, setIndex] = useState(0);
   const [offset, setOffset] = useState(0);
+
+  // No desktop, arrastar o slide com o mouse passa para o próximo.
+  const ligarArrasto = useDragScroll({ axis: 'x' });
+  const guardarTrilho = useCallback(
+    (el: HTMLDivElement | null) => {
+      trackRef.current = el;
+      ligarArrasto(el);
+    },
+    [ligarArrasto],
+  );
 
   const isLast = index === SLIDES.length - 1;
 
@@ -92,7 +103,7 @@ export default function OnboardingScreen({ onDone }: Props) {
           ) : null}
         </div>
 
-        <div className={styles.track} ref={trackRef} onScroll={onScroll}>
+        <div className={styles.track} ref={guardarTrilho} onScroll={onScroll}>
           {SLIDES.map((slide, i) => (
             <section key={slide.title} className={styles.slide}>
               <div

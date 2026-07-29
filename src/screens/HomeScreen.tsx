@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import * as api from '../api';
 import { useChild } from '../profiles/ChildContext';
 import { useLayoutMode } from '../layout/LayoutModeContext';
+import { useDragScroll } from '../hooks/useDragScroll';
 import BookCover from '../components/BookCover';
 import FadeInUp from '../components/FadeInUp';
 import StreakChip from '../components/StreakChip';
@@ -76,6 +77,10 @@ export default function HomeScreen() {
   // Busca e filtro de idade são ferramentas de adulto: ficam atrás de um toque.
   const [toolsOpen, setToolsOpen] = useState(false);
   const [categoria, setCategoria] = useState<string | null>(null);
+
+  // A faixa de temas passa da largura da coluna: arrastar com o mouse é o
+  // gesto que a pessoa espera, e sem isso ela só rolaria com shift + roda.
+  const arrastarTemas = useDragScroll({ axis: 'x' });
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -286,7 +291,7 @@ export default function HomeScreen() {
 
       {/* Prateleiras por tema: a criança escolhe pela cor e pelo desenho. */}
       {!loading && !error && books.length > 0 ? (
-        <div className={styles.temas}>
+        <div className={styles.temas} ref={arrastarTemas}>
           <button
             type="button"
             className={[styles.tema, categoria === null ? styles.temaAtivo : ''].join(' ')}

@@ -26,13 +26,23 @@
     align-items: flex-start;
   }
 
-  /* Moldura de aparelho no desktop. A rolagem continua sendo a da página
-     (um único elemento rolável em todos os modos, o que mantém simples o
-     auto-scroll do leitor e a restauração da posição de leitura). */
+  /* Moldura de aparelho: 430x932 é a proporção de um celular atual. A altura
+     é fixa e o conteúdo rola por dentro, então a moldura inteira cabe num
+     print (basta reduzir o zoom em telas mais baixas). */
   .frame {
-    min-height: calc(100dvh - 2 * var(--sp-xl));
+    height: 932px;
+    min-height: 0;
     border-radius: 36px;
+    overflow-y: auto;
+    overscroll-behavior: contain;
     box-shadow: var(--shadow-lift), 0 0 0 10px color-mix(in srgb, var(--c-text) 12%, transparent);
+    /* A barra de rolagem some: por dentro a moldura tem que parecer aparelho,
+       e o arrasto com o mouse cobre a navegação. */
+    scrollbar-width: none;
+  }
+
+  .frame::-webkit-scrollbar {
+    display: none;
   }
 }
 

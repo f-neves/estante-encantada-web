@@ -178,13 +178,12 @@
 }
 
 /* --- Índice de capítulos --- */
+/* Altura e rolagem são do <Modal>; aqui só o visual. */
 .indexCard {
   background: var(--reader-bg);
   color: var(--reader-text);
   border-radius: var(--r-lg) var(--r-lg) 0 0;
-  padding: var(--sp-xl);
-  max-height: 72vh;
-  overflow-y: auto;
+  padding: var(--sp-lg) var(--sp-xl) calc(var(--sp-xl) + env(safe-area-inset-bottom));
 }
 
 .indexTitle {

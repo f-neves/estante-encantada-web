@@ -18,6 +18,14 @@ import { playSound } from '../utils/sound';
 import ChapterImage from '../components/ChapterImage';
 import CelebrationModal from '../components/CelebrationModal';
 import { countWords, readWordCount } from '../utils/reading';
+import {
+  getScrollRange,
+  getScrollTop,
+  getViewportHeight,
+  offsetTopWithin,
+  onScroll,
+  scrollToY,
+} from '../utils/scroller';
 import { getReaderSettings, setReaderSettings, type ReaderSettings } from '../session';
 import { Chapter } from '../types';
 import styles from './ReaderScreen.module.css';
@@ -189,7 +197,7 @@ export default function ReaderScreen() {
     playSound('page');
     fractionRef.current = 0;
     restoredRef.current = true;
-    window.scrollTo({ top: 0, behavior: 'auto' });
+    scrollToY(0);
     persistProgress();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [current]);
@@ -231,17 +239,16 @@ export default function ReaderScreen() {
   }, [status.didJustFinish, continuous, current, chapters.length]);
 
   // --- Rolagem ------------------------------------------------------------
+  // Quem rola pode ser a janela ou a moldura do modo app; `scroller` resolve.
   useEffect(() => {
     let saveTimer = 0;
-    function onScroll() {
-      const denom = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
-      fractionRef.current = Math.min(1, Math.max(0, window.scrollY / denom));
+    const cancelar = onScroll(() => {
+      fractionRef.current = Math.min(1, Math.max(0, getScrollTop() / getScrollRange()));
       window.clearTimeout(saveTimer);
       saveTimer = window.setTimeout(() => persistProgress(), 600);
-    }
-    window.addEventListener('scroll', onScroll, { passive: true });
+    });
     return () => {
-      window.removeEventListener('scroll', onScroll);
+      cancelar();
       window.clearTimeout(saveTimer);
     };
   }, [persistProgress]);
@@ -253,8 +260,7 @@ export default function ReaderScreen() {
     }
     restoredRef.current = true;
     const id = window.requestAnimationFrame(() => {
-      const denom = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
-      window.scrollTo({ top: startPosition * denom, behavior: 'auto' });
+      scrollToY(startPosition * getScrollRange());
     });
     return () => window.cancelAnimationFrame(id);
   }, [loading, startPosition]);
@@ -274,13 +280,13 @@ export default function ReaderScreen() {
       return;
     }
     const readWords = readWordCount(status.currentTime, status.duration, wordTimings, totalWords);
-    const rect = bodyRef.current.getBoundingClientRect();
-    const bodyTop = rect.top + window.scrollY;
-    const boundaryY = bodyTop + (readWords / totalWords) * rect.height;
-    const viewport = window.innerHeight || 1;
-    const top = window.scrollY;
+    const bodyTop = offsetTopWithin(bodyRef.current);
+    const altura = bodyRef.current.getBoundingClientRect().height;
+    const boundaryY = bodyTop + (readWords / totalWords) * altura;
+    const viewport = getViewportHeight();
+    const top = getScrollTop();
     if (boundaryY < top + viewport * 0.15 || boundaryY > top + viewport * 0.65) {
-      window.scrollTo({ top: Math.max(0, boundaryY - viewport * 0.4), behavior: 'smooth' });
+      scrollToY(Math.max(0, boundaryY - viewport * 0.4), 'smooth');
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [status.currentTime, status.playing]);
