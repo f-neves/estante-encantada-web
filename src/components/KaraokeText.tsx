@@ -16,6 +16,8 @@ interface Token {
   text: string;
   /** Índice da palavra no capítulo; -1 para espaços e quebras. */
   wordIndex: number;
+  /** Nos espaços, qual palavra vem imediatamente antes. */
+  afterWord: number;
 }
 
 // Quebra o texto preservando espaços e quebras de linha, numerando as palavras.
@@ -26,15 +28,19 @@ function tokenize(text: string): Token[] {
     .filter((p) => p.length > 0)
     .map((part) => {
       if (part.trim().length === 0) {
-        return { text: part, wordIndex: -1 };
+        return { text: part, wordIndex: -1, afterWord: word - 1 };
       }
-      return { text: part, wordIndex: word++ };
+      return { text: part, wordIndex: word++, afterWord: word - 2 };
     });
 }
 
 // Destaca o trecho já narrado e, com força, a palavra que está sendo lida
 // agora. Marcar a palavra corrente é o que sustenta o acompanhamento de quem
 // está aprendendo a ler; o fundo suave no que passou serve de rastro.
+//
+// Os espaços entre palavras lidas também recebem o fundo: assim a marcação é
+// uma faixa contínua, como no aplicativo, e não uma fileira de retângulos
+// soltos com buracos no meio.
 export default function KaraokeText({
   text,
   currentTime,
@@ -53,8 +59,16 @@ export default function KaraokeText({
     <p className={className}>
       {tokens.map((token, i) => {
         if (token.wordIndex < 0) {
-          return <span key={i}>{token.text}</span>;
+          // Emenda a faixa: o espaço só é marcado depois que a palavra à
+          // esquerda dele terminou, nunca antes da palavra que está tocando.
+          const emenda = token.afterWord >= 0 && token.afterWord < currentWord;
+          return (
+            <span key={i} className={emenda ? styles.read : undefined}>
+              {token.text}
+            </span>
+          );
         }
+
         const lida = token.wordIndex < currentWord;
         const atual = token.wordIndex === currentWord;
         const inicio = wordTimings[token.wordIndex];

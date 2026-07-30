@@ -1,20 +1,24 @@
+/* A marcação é uma faixa contínua: sem cantos arredondados e sem respiro, para
+   que palavra e espaço se emendem numa linha só, como no aplicativo. O
+   `box-decoration-break: clone` mantém o desenho certo quando a frase quebra
+   de linha. */
 .word {
-  border-radius: 6px;
-  transition: background-color 120ms ease, color 120ms ease, transform 120ms ease;
+  transition: background-color 120ms ease, color 120ms ease;
 }
 
 /* Rastro do que já foi narrado. */
 .read {
   background: color-mix(in srgb, var(--c-primary) 18%, transparent);
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
 }
 
 /* A palavra que está sendo lida agora: é o que a criança segue com o olho. */
 .current {
   background: var(--c-primary);
   color: var(--c-white);
-  padding: 0 2px;
-  margin: 0 -2px;
-  box-shadow: 0 2px 0 color-mix(in srgb, var(--c-primary) 60%, #000);
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
 }
 
 .clickable {
