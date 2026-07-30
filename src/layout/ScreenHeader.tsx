@@ -1,12 +1,15 @@
 import type { ReactNode } from 'react';
-import { useNavigate } from 'react-router-dom';
 import Icon from '../components/Icon';
+import { useGoBack } from '../hooks/useGoBack';
 import { useLayoutMode } from './LayoutModeContext';
 import styles from './ScreenHeader.module.css';
 
 interface Props {
   title: string;
-  /** Mostra o botão voltar. Passe uma rota para forçar o destino. */
+  /**
+   * Mostra o botão voltar. A rota, quando informada, é o destino de quem caiu
+   * direto aqui; quem veio navegando desfaz o passo que deu.
+   */
   back?: boolean | string;
   actions?: ReactNode;
   /** Texto de apoio, exibido só na versão desktop. */
@@ -16,18 +19,8 @@ interface Props {
 // Faz o papel do cabeçalho do stack nativo. Na versão App é uma barra fina
 // grudada no topo; na versão desktop vira o título da página.
 export default function ScreenHeader({ title, back, actions, subtitle }: Props) {
-  const navigate = useNavigate();
   const { mode } = useLayoutMode();
-
-  function goBack() {
-    if (typeof back === 'string') {
-      navigate(back);
-    } else if (window.history.length > 1) {
-      navigate(-1);
-    } else {
-      navigate('/');
-    }
-  }
+  const goBack = useGoBack(typeof back === 'string' ? back : '/');
 
   return (
     <header className={mode === 'app' ? styles.appBar : styles.pageHead}>

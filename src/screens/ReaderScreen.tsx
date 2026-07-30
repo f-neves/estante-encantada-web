@@ -1,10 +1,11 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
+import { useParams, useSearchParams } from 'react-router-dom';
 import * as api from '../api';
 import { audioSource } from '../media';
 import { useChild } from '../profiles/ChildContext';
 import { useAudioPlayer } from '../hooks/useAudioPlayer';
 import { useSpeech } from '../hooks/useSpeech';
+import { useGoBack } from '../hooks/useGoBack';
 import Icon from '../components/Icon';
 import Loading from '../components/Loading';
 import ErrorState from '../components/ErrorState';
@@ -46,9 +47,11 @@ const DEFAULT_VOICE = 'pt-BR-Neural2-A';
 export default function ReaderScreen() {
   const { bookId = '' } = useParams();
   const [params] = useSearchParams();
-  const navigate = useNavigate();
   const { activeProfile } = useChild();
   const speech = useSpeech();
+  // Desfaz o passo que trouxe até aqui (o livro, a estante ou os favoritos).
+  // Quem abriu o capítulo por link direto cai na tela do livro.
+  const voltar = useGoBack(`/livro/${bookId}`);
 
   const startIndex = Number(params.get('cap') ?? 0) || 0;
   const startPosition = Number(params.get('pos') ?? 0) || 0;
@@ -410,6 +413,7 @@ export default function ReaderScreen() {
           onToggle={toggleNarration}
           onSeekWord={ouvirPalavra}
           onExit={() => changeListen(false)}
+          onBack={voltar}
         />
 
         {isLast ? (
@@ -452,8 +456,8 @@ export default function ReaderScreen() {
         <button
           type="button"
           className={styles.toolBtn}
-          onClick={() => navigate(`/livro/${bookId}`)}
-          aria-label="Voltar ao livro"
+          onClick={voltar}
+          aria-label="Voltar"
         >
           <Icon name="chevron-back" size="var(--icon-lg)" />
         </button>

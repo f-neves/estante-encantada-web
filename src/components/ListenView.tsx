@@ -37,6 +37,7 @@ interface Props {
   onToggle: () => void;
   onSeekWord: (indice: number) => void;
   onExit: () => void;
+  onBack: () => void;
 }
 
 // Modo Ouvir: pensado para 3 a 6 anos, que ainda não leem. Uma frase por vez,
@@ -53,6 +54,7 @@ export default function ListenView({
   onToggle,
   onSeekWord,
   onExit,
+  onBack,
 }: Props) {
   const atual = useMemo(() => {
     if (currentWord < 0) {
@@ -84,6 +86,10 @@ export default function ListenView({
   return (
     <div className={styles.palco}>
       <div className={styles.topo}>
+        {/* Sem isto não havia como sair do livro no modo Ouvir. */}
+        <button type="button" className={styles.voltar} onClick={onBack} aria-label="Voltar">
+          <Icon name="chevron-back" size="var(--icon-lg)" />
+        </button>
         <button type="button" className={styles.sair} onClick={onExit}>
           <Icon name="text" size="var(--icon-sm)" />
           Ver o texto todo

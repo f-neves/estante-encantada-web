@@ -13,8 +13,31 @@
   padding: var(--sp-md) var(--sp-lg);
 }
 
+.voltar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  color: var(--reader-title, var(--c-primary));
+  flex: none;
+  transition: transform 140ms ease, background 140ms ease;
+}
+
+.voltar:active {
+  transform: scale(0.92);
+}
+
+@media (hover: hover) {
+  .voltar:hover {
+    background: color-mix(in srgb, var(--c-primary) 12%, transparent);
+  }
+}
+
 /* Sair do modo Ouvir é decisão de adulto: fica discreto. */
 .sair {
+  margin-right: auto;
   display: inline-flex;
   align-items: center;
   gap: 6px;

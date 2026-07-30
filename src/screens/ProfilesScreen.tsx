@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useChild } from '../profiles/ChildContext';
+import { useGoBack } from '../hooks/useGoBack';
 import Icon from '../components/Icon';
 import Loading from '../components/Loading';
 import ErrorState from '../components/ErrorState';
@@ -12,6 +13,7 @@ import styles from './ProfilesScreen.module.css';
 
 export default function ProfilesScreen() {
   const navigate = useNavigate();
+  const voltar = useGoBack('/');
   const {
     profiles,
     activeProfile,
@@ -34,7 +36,9 @@ export default function ProfilesScreen() {
 
   function selectAndReturn(profile: ChildProfile) {
     selectProfile(profile);
-    navigate('/');
+    // `replace` porque escolher o personagem encerra esta tela: voltar tem que
+    // sair da estante, não trazer a escolha de volta.
+    navigate('/', { replace: true });
   }
 
   function startEdit(profile: ChildProfile) {
@@ -100,7 +104,7 @@ export default function ProfilesScreen() {
   return (
     <div className={styles.container}>
       {activeProfile ? (
-        <button type="button" className={styles.back} onClick={() => navigate('/')}>
+        <button type="button" className={styles.back} onClick={voltar}>
           <Icon name="chevron-back" size="var(--icon-sm)" />
           Início
         </button>
