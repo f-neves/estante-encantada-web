@@ -22,6 +22,13 @@ toque, tanto na vertical quanto nas faixas laterais (temas, introdução). Cliqu
 sendo clique; o arrasto só começa depois de alguns pixels de movimento, e o clique logo em
 seguida é engolido para não abrir o livro sem querer.
 
+Os diálogos também ficam presos à moldura: o escurecido, a folha que sobe e o teclado do PIN
+acontecem dentro do aparelho, não sobre a janela. Como o `<dialog>` nativo sobe para a camada de
+topo e ignora onde está na página, o `AppShell` publica a geometria da moldura em variáveis de
+CSS (`--frame-left`, `--frame-top`, `--frame-width`, `--frame-height`) e o `Modal` se ancora
+nelas. Numa janela mais baixa que a moldura, o diálogo se limita à parte visível dela, porque um
+`<dialog>` aberto trava a rolagem da página e deixaria o resto inalcançável.
+
 ## Começando
 
 ```bash

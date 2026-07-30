@@ -1,65 +1,78 @@
-/* Regra de ouro daqui: nenhum diálogo pode passar da tela sem poder rolar.
-   O <dialog> nasce com `max-height: 80vh` do navegador, mas o conteúdo dentro
-   dele transborda se ninguém disser o contrário, e é assim que um botão de
-   confirmar acaba embaixo da borda da janela. */
-.dialog {
-  border: none;
-  padding: 0;
-  background: transparent;
-  color: inherit;
-  max-width: none;
-  max-height: 100dvh;
-  overflow: hidden;
-  display: flex;
-}
+/* Duas regras valem para todo diálogo do site:
+   1. nunca passar da área visível sem poder rolar;
+   2. no modo app dentro do desktop, ficar preso à moldura do aparelho.
 
-.dialog::backdrop {
+   A segunda existe porque o <dialog> nativo sobe para a camada de topo e
+   ignora onde ele está na página: sem isto, abrir os ajustes da leitura numa
+   moldura de 430px cobria a janela inteira e quebrava a ilusão de aplicativo
+   (e o print da apresentação). A geometria da moldura chega em variáveis
+   publicadas pelo AppShell. */
+
+.dialog {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  max-width: 100vw;
+  height: 100dvh;
+  max-height: 100dvh;
+  margin: 0;
+  padding: 0;
+  border: none;
+  color: inherit;
+  display: flex;
+  overflow: hidden;
+  /* O escurecido vive no próprio diálogo, e não no ::backdrop, para que ele
+     acompanhe a moldura quando estiver preso a ela. */
   background: rgba(58, 46, 92, 0.55);
   backdrop-filter: blur(2px);
   animation: fade 180ms ease-out;
 }
 
+.dialog::backdrop {
+  background: transparent;
+}
+
 /* Todo conteúdo rola por dentro quando não couber. */
 .content {
-  width: 100%;
-  max-height: 100%;
   overflow-y: auto;
   overscroll-behavior: contain;
 }
 
 /* --- Centralizado (confirmações, celebração) --- */
-.center {
+.center .content {
   margin: auto;
   width: min(100% - 2 * var(--sp-xl), 380px);
-  max-height: calc(100dvh - 2 * var(--sp-xl));
-}
-
-.center .content {
+  max-height: calc(100% - 2 * var(--sp-xl));
   animation: pop 260ms cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-/* --- Folha que sobe de baixo (índice de capítulos, ajustes do leitor) ---
-   Fica colada embaixo, mas nunca ultrapassa a altura da janela. */
-.sheet {
+/* --- Folha que sobe de baixo (índice de capítulos, ajustes do leitor) --- */
+.sheet .content {
   margin: auto auto 0;
   width: min(100%, 620px);
-  max-height: min(78dvh, calc(100dvh - var(--sp-lg)));
-}
-
-.sheet .content {
+  max-height: min(78%, 100% - var(--sp-lg));
   animation: slideUp 240ms ease-out;
 }
 
 /* --- Tela cheia (fluxo do PIN parental) --- */
-.full {
-  margin: 0;
-  width: 100vw;
-  height: 100dvh;
-  max-width: 100vw;
+.full .content {
+  width: 100%;
+  height: 100%;
 }
 
-.full .content {
-  height: 100%;
+/* --- Preso à moldura do aparelho (modo app no desktop) --- */
+:global(html[data-framed]) .dialog {
+  left: var(--frame-left, 0);
+  top: var(--frame-top, 0);
+  right: auto;
+  bottom: auto;
+  width: var(--frame-width, 100%);
+  height: var(--frame-height, 100dvh);
+  max-width: var(--frame-width, 100vw);
+  max-height: var(--frame-height, 100dvh);
+  /* Mesmo arredondado da moldura, senão o escurecido vaza nos cantos. */
+  border-radius: var(--frame-radius-top, 36px) var(--frame-radius-top, 36px)
+    var(--frame-radius-bottom, 36px) var(--frame-radius-bottom, 36px);
 }
 
 @keyframes fade {

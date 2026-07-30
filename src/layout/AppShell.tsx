@@ -28,6 +28,61 @@ export default function AppShell() {
     frameRef.current?.scrollTo({ top: 0 });
   }, [pathname]);
 
+  // Publica onde a moldura está para os diálogos se prenderem a ela. O
+  // <dialog> nativo vive na camada de topo e ignora a árvore da página, então
+  // a única forma de mantê-lo dentro do aparelho é passar a geometria por
+  // variáveis de CSS.
+  useEffect(() => {
+    const root = document.documentElement;
+    if (!wide) {
+      root.removeAttribute('data-framed');
+      return;
+    }
+
+    function medir() {
+      const el = frameRef.current;
+      if (!el) {
+        return;
+      }
+      const r = el.getBoundingClientRect();
+      // Numa janela mais baixa que a moldura, o diálogo se limita à parte
+      // visível dela: preso ao aparelho, mas nunca com um pedaço fora do
+      // alcance (o <dialog> aberto trava a rolagem da página).
+      const left = Math.max(r.left, 0);
+      const top = Math.max(r.top, 0);
+      const right = Math.min(r.right, window.innerWidth);
+      const bottom = Math.min(r.bottom, window.innerHeight);
+
+      root.style.setProperty('--frame-left', `${left}px`);
+      root.style.setProperty('--frame-top', `${top}px`);
+      root.style.setProperty('--frame-width', `${Math.max(0, right - left)}px`);
+      root.style.setProperty('--frame-height', `${Math.max(0, bottom - top)}px`);
+      // Arredonda só os cantos que sobreviveram ao corte, senão a curva
+      // apareceria no meio da moldura.
+      const topoInteiro = r.top >= -0.5;
+      const baseInteira = r.bottom <= window.innerHeight + 0.5;
+      root.style.setProperty('--frame-radius-top', topoInteiro ? '36px' : '0px');
+      root.style.setProperty('--frame-radius-bottom', baseInteira ? '36px' : '0px');
+    }
+
+    root.setAttribute('data-framed', '');
+    medir();
+
+    const observador = new ResizeObserver(medir);
+    if (frameRef.current) {
+      observador.observe(frameRef.current);
+    }
+    window.addEventListener('resize', medir);
+    window.addEventListener('scroll', medir, { passive: true });
+
+    return () => {
+      observador.disconnect();
+      window.removeEventListener('resize', medir);
+      window.removeEventListener('scroll', medir);
+      root.removeAttribute('data-framed');
+    };
+  }, [wide]);
+
   const ligarArrasto = useDragScroll({ axis: 'y', enabled: wide });
   const guardarMoldura = useCallback(
     (el: HTMLDivElement | null) => {
