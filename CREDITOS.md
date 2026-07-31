@@ -37,9 +37,12 @@ atribuição obrigatória a cumprir, e a tela de Créditos do site reflete isso.
 | Arquivo | Como foi feito |
 |---|---|
 | `cachinhos.jpg`, `chapeuzinho.jpg`, `cinderela.jpg`, `joao-pe-de-feijao.jpg`, `patinho-feio.jpg`, `vitoria-regia.jpg` | Ilustrações próprias, fornecidas pelo autor do projeto em 31/07/2026 |
-| `saci.jpg`, `curupira.jpg`, `sitio.jpg` | Desenhadas em SVG por `scripts/make-covers.mjs` e rasterizadas. Substituíram imagens de terceiros na auditoria de 28/07/2026 |
-| `livro01.png` | Ilustração gerada por IA para a história original do projeto |
+| `curupira.jpg`, `sitio.jpg`, `livro01.png`, `livro03.jpg`, `livro04.jpg` | Ilustrações próprias, fornecidas pelo autor do projeto em 31/07/2026. Substituíram os desenhos provisórios |
+| `saci.jpg` | Desenhada em SVG por `scripts/make-covers.mjs` e rasterizada. Substituiu imagem de terceiros na auditoria de 28/07/2026 |
 | `public/icons/*` | Ícones do PWA, derivados do ícone do aplicativo |
+
+`livro01.png` é o único em PNG, porque o catálogo e o aplicativo apontam para esse nome. Sai com
+paleta e pontilhado (531 KB no lugar dos 3 MB do PNG puro), o que evita faixas no céu estrelado.
 
 As miniaturas em `covers/thumbs/` são reduções das capas acima e seguem a mesma situação de cada
 original.

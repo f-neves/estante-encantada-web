@@ -29,6 +29,7 @@ export function fileUrl(path: string): string {
 // guardam imagem por semanas. Sem isso, quem já visitou o site continuaria
 // vendo a capa antiga por até um mês.
 //
-// Trocou alguma capa? Mude a data aqui no mesmo commit. Só as capas usam este
-// selo: a narração tem ~60 MB e não deve ser rebaixada por causa de arte.
-export const ASSET_VERSION = '2026-07-31';
+// Trocou alguma capa? Mude o selo aqui no mesmo commit (data, com sufixo se
+// houver mais de uma troca no dia). Só as capas o usam: a narração tem ~60 MB
+// e não deve ser rebaixada por causa de arte.
+export const ASSET_VERSION = '2026-07-31-2';
