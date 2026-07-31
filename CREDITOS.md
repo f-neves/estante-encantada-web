@@ -31,31 +31,17 @@ autoral e precisa de atenção própria em uso comercial.
 
 ## Capas
 
-### Domínio público (sem obrigações)
-
-| Arquivo | Autor | Fonte |
-|---|---|---|
-| `chapeuzinho.jpg` | Otto Kubel (1868-1951) | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Little_Red_Riding_Hood_Otto_Kubel.jpg) |
-| `cachinhos.jpg` | Jessie Willcox Smith (1863-1935) | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Jessie_Willcox_Smith_-_%27Goldilocks_and_the_Three_Bears%27,_Swift%27s_Premium_Soap_Products_calendar_illustration.jpg) |
-| `patinho-feio.jpg` | Milo Winter (1888-1956) | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:The_Ugly_Duckling_cropped.jpg) |
-| `joao-pe-de-feijao.jpg` | Arthur Rackham (1867-1939) | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Jack_and_the_Beanstalk_Giant_-_Project_Gutenberg_eText_17034.jpg) |
-
-### Creative Commons (atribuição obrigatória)
-
-| Arquivo | Crédito exigido |
-|---|---|
-| `cinderela.jpg` | Digitalização da MCAD Library (Jack Zipes Historic Fairy Tale Postcard Collection), ilustração de Oskar Herrfurth (1862-1934). Licença [CC BY 2.0](https://creativecommons.org/licenses/by/2.0/). [Arquivo no Commons](https://commons.wikimedia.org/wiki/File:Cinderella_-_Jack_Zipes_Historic_Fairy_Tale_Postcard_Collection_-_Herrfurth,_Oskar_(German,_1862-1934).jpg) |
-
-### Arte própria do projeto
+Desde 31/07/2026 nenhuma capa vem de terceiros: todas foram feitas para o projeto. Não há
+atribuição obrigatória a cumprir, e a tela de Créditos do site reflete isso.
 
 | Arquivo | Como foi feito |
 |---|---|
+| `cachinhos.jpg`, `chapeuzinho.jpg`, `cinderela.jpg`, `joao-pe-de-feijao.jpg`, `patinho-feio.jpg`, `vitoria-regia.jpg` | Ilustrações próprias, fornecidas pelo autor do projeto em 31/07/2026 |
 | `saci.jpg`, `curupira.jpg`, `sitio.jpg` | Desenhadas em SVG por `scripts/make-covers.mjs` e rasterizadas. Substituíram imagens de terceiros na auditoria de 28/07/2026 |
-| `vitoria-regia.jpg` | Ilustração própria, fornecida pelo autor do projeto. Substituiu em 31/07/2026 a fotografia sob CC BY 3.0 que ocupava a capa |
 | `livro01.png` | Ilustração gerada por IA para a história original do projeto |
 | `public/icons/*` | Ícones do PWA, derivados do ícone do aplicativo |
 
-As miniaturas em `covers/thumbs/` são recortes das capas acima e seguem a mesma licença de cada
+As miniaturas em `covers/thumbs/` são reduções das capas acima e seguem a mesma situação de cada
 original.
 
 ## Narração
@@ -72,3 +58,16 @@ deste projeto, e pertencem ao projeto conforme os termos do serviço.
 - Livro "A Day Dark as Night": era o romance de Carl Bowen (White Wolf Publishing, 2004), da
   linha Exalted. Protegido por direito autoral e fora da faixa etária do app. O PDF nunca chegou
   a ser distribuído (o arquivo não existia), mas a entrada estava no catálogo.
+
+## Substituídas em 31/07/2026
+
+Trocadas por ilustrações próprias. Nenhuma delas era irregular: saíram por escolha de arte, e a
+troca eliminou de quebra a única atribuição obrigatória que o projeto ainda tinha.
+
+- `cinderela.jpg`: digitalização da MCAD Library (coleção Jack Zipes), ilustração de Oskar
+  Herrfurth (1862-1934), sob CC BY 2.0. Era a última imagem que exigia crédito visível.
+- `chapeuzinho.jpg`: Otto Kubel (1868-1951), domínio público.
+- `cachinhos.jpg`: Jessie Willcox Smith (1863-1935), domínio público.
+- `patinho-feio.jpg`: Milo Winter (1888-1956), domínio público.
+- `joao-pe-de-feijao.jpg`: Arthur Rackham (1867-1939), domínio público.
+- `vitoria-regia.jpg`: fotografia de Bilby, sob CC BY 3.0.

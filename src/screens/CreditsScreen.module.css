@@ -14,48 +14,8 @@
   line-height: 1.6;
 }
 
-.lista {
-  display: flex;
-  flex-direction: column;
-  gap: var(--sp-md);
-}
-
-.item {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.item + .item {
-  border-top: 1px solid var(--c-line);
-  padding-top: var(--sp-md);
-}
-
-.livro {
-  font-size: var(--fs-body);
-  font-weight: 800;
-  color: var(--c-text);
-}
-
-.autor {
-  font-size: var(--fs-small);
-  color: var(--c-text-soft);
-}
-
-.link {
-  display: inline-flex;
-  align-items: center;
-  gap: 2px;
-  align-self: flex-start;
-  margin-top: 4px;
-  color: var(--c-primary);
-  font-weight: 700;
-  font-size: var(--fs-small);
-  min-height: 32px;
-}
-
-@media (hover: hover) {
-  .link:hover {
-    text-decoration: underline;
-  }
+/* Os blocos são cartões irmãos: o respiro entre eles vem daqui, já que
+   `.card` global não tem margem. */
+.container > :global(.card) + :global(.card) {
+  margin-top: var(--sp-lg);
 }
