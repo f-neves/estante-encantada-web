@@ -18,12 +18,6 @@ const CC: Credito[] = [
     licenca: 'CC BY 2.0',
     url: 'https://commons.wikimedia.org/wiki/File:Cinderella_-_Jack_Zipes_Historic_Fairy_Tale_Postcard_Collection_-_Herrfurth,_Oskar_(German,_1862-1934).jpg',
   },
-  {
-    livro: 'A Lenda da Vitória-Régia',
-    autor: 'Fotografia de Bilby',
-    licenca: 'CC BY 3.0',
-    url: 'https://commons.wikimedia.org/wiki/File:Victoria_amazonica_03.jpg',
-  },
 ];
 
 const PUBLICO: Credito[] = [
@@ -93,7 +87,7 @@ export default function CreditsScreen() {
           </p>
         </section>
 
-        <h2 className="section-label">Capas sob Creative Commons</h2>
+        <h2 className="section-label">Capa sob Creative Commons</h2>
         <div className="card">
           <Lista itens={CC} />
         </div>
@@ -106,9 +100,10 @@ export default function CreditsScreen() {
         <h2 className="section-label">Arte própria</h2>
         <div className="card">
           <p className={styles.texto}>
-            As capas de O Saci-Pererê, O Curupira, Sítio do Picapau Amarelo e O Dragão que Não Sabia
-            Voar, além dos ícones do app, foram feitas para este projeto. A narração é gerada pelo
-            Google Cloud Text-to-Speech a partir dos textos daqui.
+            As capas de O Saci-Pererê, O Curupira, Sítio do Picapau Amarelo, A Lenda da
+            Vitória-Régia e O Dragão que Não Sabia Voar, além dos ícones do app, foram feitas para
+            este projeto. A narração é gerada pelo Google Cloud Text-to-Speech a partir dos textos
+            daqui.
           </p>
         </div>
       </div>

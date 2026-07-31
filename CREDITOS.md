@@ -45,13 +45,13 @@ autoral e precisa de atenção própria em uso comercial.
 | Arquivo | Crédito exigido |
 |---|---|
 | `cinderela.jpg` | Digitalização da MCAD Library (Jack Zipes Historic Fairy Tale Postcard Collection), ilustração de Oskar Herrfurth (1862-1934). Licença [CC BY 2.0](https://creativecommons.org/licenses/by/2.0/). [Arquivo no Commons](https://commons.wikimedia.org/wiki/File:Cinderella_-_Jack_Zipes_Historic_Fairy_Tale_Postcard_Collection_-_Herrfurth,_Oskar_(German,_1862-1934).jpg) |
-| `vitoria-regia.jpg` | Fotografia de Bilby. Licença [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/). [Arquivo no Commons](https://commons.wikimedia.org/wiki/File:Victoria_amazonica_03.jpg) |
 
 ### Arte própria do projeto
 
 | Arquivo | Como foi feito |
 |---|---|
 | `saci.jpg`, `curupira.jpg`, `sitio.jpg` | Desenhadas em SVG por `scripts/make-covers.mjs` e rasterizadas. Substituíram imagens de terceiros na auditoria de 28/07/2026 |
+| `vitoria-regia.jpg` | Ilustração própria, fornecida pelo autor do projeto. Substituiu em 31/07/2026 a fotografia sob CC BY 3.0 que ocupava a capa |
 | `livro01.png` | Ilustração gerada por IA para a história original do projeto |
 | `public/icons/*` | Ícones do PWA, derivados do ícone do aplicativo |
 
