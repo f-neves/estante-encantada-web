@@ -10,6 +10,7 @@ import * as api from '../api';
 import { ChildInput } from '../api/children';
 import { useAuth } from '../auth/AuthContext';
 import { getStoredProfileId, setStoredProfileId, clearStoredProfileId } from '../session';
+import { seedDemoContent } from './demoSeed';
 import { ChildProfile } from '../types';
 
 const SEEDED_KEY = 'estante_profile_seeded';
@@ -71,6 +72,14 @@ export function ChildProvider({ children }: { children: ReactNode }) {
         window.localStorage.setItem(SEEDED_KEY, '1');
         list = [created];
         selectProfile(created);
+      }
+
+      // Estante de demonstração na primeira visita. Antes de publicar os
+      // perfis, para que Favoritos e Recompensas já apareçam preenchidos na
+      // primeira renderização, sem piscar vazios.
+      const unico = list.length === 1 ? list[0] : undefined;
+      if (unico) {
+        await seedDemoContent(unico.id);
       }
 
       setProfiles(list);

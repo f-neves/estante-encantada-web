@@ -6,7 +6,7 @@ export default function StreakChip({ streak }: { streak: number }) {
   return (
     <span className={styles.chip}>
       <Icon name="flame" size="var(--icon-sm)" color="var(--c-flame)" />
-      {streak} {streak === 1 ? 'dia' : 'dias'} seguidos!
+      {streak === 1 ? '1 dia seguido!' : `${streak} dias seguidos!`}
     </span>
   );
 }
