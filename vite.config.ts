@@ -52,7 +52,10 @@ export default defineConfig({
             },
           },
           {
-            urlPattern: /\/uploads\/covers\/.*\.(png|jpe?g|webp)$/,
+            // O `(\?.*)?` é obrigatório: as capas são pedidas com o selo de
+            // versão (`?v=...`), e sem isso a regra deixaria de casar e elas
+            // sairiam do cache offline.
+            urlPattern: /\/uploads\/covers\/.*\.(png|jpe?g|webp)(\?.*)?$/,
             handler: 'StaleWhileRevalidate',
             options: {
               cacheName: 'capas',

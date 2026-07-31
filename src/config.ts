@@ -21,3 +21,14 @@ export const STATIC_URL = OFFLINE ? '' : API_URL.replace(/\/api\/?$/, '');
 export function fileUrl(path: string): string {
   return `${STATIC_URL}${encodeURI(path)}`;
 }
+
+// Versão das capas.
+//
+// Os arquivos têm nome fixo (`cinderela.jpg` continua `cinderela.jpg` depois de
+// redesenhado), e tanto o cabeçalho de cache da Netlify quanto o service worker
+// guardam imagem por semanas. Sem isso, quem já visitou o site continuaria
+// vendo a capa antiga por até um mês.
+//
+// Trocou alguma capa? Mude a data aqui no mesmo commit. Só as capas usam este
+// selo: a narração tem ~60 MB e não deve ser rebaixada por causa de arte.
+export const ASSET_VERSION = '2026-07-31';
