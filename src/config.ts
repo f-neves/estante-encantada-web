@@ -32,4 +32,4 @@ export function fileUrl(path: string): string {
 // Trocou alguma capa? Mude o selo aqui no mesmo commit (data, com sufixo se
 // houver mais de uma troca no dia). Só as capas o usam: a narração tem ~60 MB
 // e não deve ser rebaixada por causa de arte.
-export const ASSET_VERSION = '2026-07-31-2';
+export const ASSET_VERSION = '2026-07-31-3';
